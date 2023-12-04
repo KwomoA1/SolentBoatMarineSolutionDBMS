@@ -57,3 +57,72 @@ insert into emergency_contact (emergency_contact_id, customer_id, contact_fname,
 insert into emergency_contact (emergency_contact_id, customer_id, contact_fname, contact_lname, contact_mobile, contact_landline, contact_emailaddress) values (15, 1, 'Andrée', 'Belch', '307-450-9977', null, null);
 
 /*boatyard details*/
+insert into boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity) values (1, 'Blue Bill Park', 'Poland', '8 Orin Park', null, '05-090', 12);
+insert into boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity) values (2, 'Hazelcrest', 'Ukraine', '635 Dennis Alley', null, null, 13);
+insert into boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity) values (3, 'Crownhardt', 'Greece', '2290 Columbus Hill', '18th Floor', null, 13);
+insert into boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity) values (4, 'Colorado', 'Sweden', '30187 Burrows Pass', '9th Floor', '542 95', 10);
+insert into boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity) values (5, 'Dawn', 'Peru', '2889 Anhalt Pass', 'Suite 90', null, 10);
+
+/*bookings*/
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (1, 14, 9, 3, 'Pre-booked', '11/12/2023', 'The boat experiences frequent engine stalls, disrupting smooth navigation and necessitating a thorough inspection of the engine components.', 'Completed');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (2, 15, 3, 2, 'Pre-booked', '3/20/2023', 'The propeller shows signs of wear and tear, affecting the boats performance and requiring replacement or repair to ensure optimal propulsion.', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (3, 12, 3, 5, 'Emergency Service', '9/7/2023', 'Water leakage is observed in the hull, indicating potential structural issues. Repair work is essential to prevent further damage and maintain buoyancy.', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (4, 10, 1, 4, 'Pre-booked', '6/21/2023', 'The boats electrical system is malfunctioning, causing issues with navigation lights, instruments, or the overall power supply. An electrical diagnosis and repairs are needed.', 'On-going');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (5, 10, 2, 4, 'Emergency Service', '10/18/2023', 'The boat experiences issues with the fuel system, such as clogged filters or a faulty fuel pump, leading to engine inefficiency and potential breakdowns.', 'Completed');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (6, 11, 1, 3, 'Emergency Service', '5/6/2023', 'The rudder is misaligned, impacting steering and making it challenging to control the boat. Alignment adjustments and potential replacement are necessary.', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (7, 3, 12, 5, 'Pre-booked', '6/24/2023', 'The bilge pump is not functioning correctly, risking water accumulation in the bilge area. Prompt repair or replacement is crucial to prevent flooding and potential damage.', 'On-going');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (8, 11, 15, 1, 'Pre-booked', '6/19/2023', 'The boats fiberglass structure has developed cracks, compromising its integrity. Fiberglass repairs are essential to restore strength and prevent further damage', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (9, 6, 14, 2, 'Pre-booked', '8/27/2023', 'Various metal components, such as hinges, bolts, or railings, show signs of corrosion. Replacement or anti-corrosion treatment is needed to ensure structural stability.', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (10, 8, 8, 5, 'Emergency Service', '4/29/2023', 'The stern of the boat is noticeably lower in the water, suggesting a possible weight distribution issue or water accumulation. Investigation and corrective measures are required.', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (11, 4, 15, 2, 'Pre-booked', '12/10/2022', 'Critical navigation equipment, such as GPS or sonar systems, is not functioning properly. Repairs or replacements are necessary to ensure safe navigation.', 'Scheduled');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (12, 1, 9, 1, 'Pre-booked', '7/27/2023', 'The boat emits an unusual amount of smoke from the exhaust, indicating potential engine problems. Diagnostic testing and engine repairs are essential.', 'Completed');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (13, 9, 11, 1, 'Emergency Service', '10/25/2023', 'Wires in the boats electrical system are frayed or damaged, posing a risk of short circuits or electrical failures. Rewiring and insulation replacement are needed.', 'Completed');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (14, 9, 13, 1, 'Pre-booked', '3/16/2023', 'The boats steering mechanism is stiff or unresponsive, making navigation difficult. Inspection and lubrication of the steering components are required.', 'Completed');
+insert into bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status) values (15, 5, 8, 1, 'Pre-booked', '9/27/2023', 'The boats upholstery shows signs of water damage, affecting the aesthetic appeal and comfort. Drying, cleaning, and potential upholstery replacement are necessary.', 'On-going');
+
+
+/*boats*/
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (1, 13, 4, 6, 'Dry Slip', 'Medium', 'Commercial', 'Saudra', 417699, '5/4/1993', 184, 85, 175, 397);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (2, 11, 1, 9, 'Indoor', 'Medium', 'Commercial', 'Timothea', 951237, '8/20/1982', 292, 137, 479, 432);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (3, 15, 4, 8, 'Indoor', 'Large', 'Private', 'Connie', 336967, '9/26/1978', 377, 469, 461, 237);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (4, 9, 4, 4, 'Dry Slip', 'Large', 'Commercial', 'Kendra', 304266, '5/30/1945', 435, 261, 276, 496);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (5, 8, 1, 3, 'Wet Slip', 'Large', 'Private', 'Danika', 949416, '8/7/1952', 69, 74, 468, 93);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (6, 13, 2, 4, 'Indoor', 'Medium', 'Commercial', 'Chelsea', 848229, '7/31/1949', 496, 98, 384, 460);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (7, 12, 5, 8, 'Wet Slip', 'Medium', 'Private', 'Keriann', 172324, '10/23/1907', 488, 11, 334, 64);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (8, 7, 2, 4, 'Wet Slip', 'Medium', 'Commercial', 'Kattie', 959562, '7/9/1909', 400, 499, 192, 348);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (9, 11, 3, 11, 'Dry Slip', 'Medium', 'Commercial', 'Olwen', 258571, '12/7/1916', 300, 102, 371, 25);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (10, 14, 5, 14, 'Indoor', 'Large', 'Commercial', 'Sally', 982831, '11/14/1930', 399, 176, 372, 29);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (11, 7, 2, 12, 'Indoor', 'Medium', 'Commercial', 'Barbara', 248747, '10/7/1999', 135, 339, 274, 154);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (12, 14, 5, 7, 'Wet Slip', 'Small', 'Private', 'Sissie', 464049, '1/5/1978', 466, 323, 177, 118);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (13, 11, 2, 8, 'Indoor', 'Small', 'Private', 'Mara', 249078, '7/13/1948', 172, 121, 68, 95);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (14, 2, 4, 8, 'Wet Slip', 'Medium', 'Commercial', 'Aindrea', 976396, '7/2/1940', 322, 356, 178, 294);
+insert into boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity) values (15, 12, 1, 12, 'Dry Slip', 'Small', 'Commercial', 'Beverly', 311251, '12/18/1974', 126, 293, 422, 346);
+
+/*classes*/
+insert into classes (class_id, class_name) values (1, 'Sailboat');
+insert into classes (class_id, class_name) values (2, 'Motor Yacht');
+insert into classes (class_id, class_name) values (3, 'Barge');
+insert into classes (class_id, class_name) values (4, 'Fishing Trawler');
+insert into classes (class_id, class_name) values (5, 'Military');
+insert into classes (class_id, class_name) values (6, 'Catamaran');
+insert into classes (class_id, class_name) values (7, 'Ferry');
+insert into classes (class_id, class_name) values (8, 'Cruise Ship');
+insert into classes (class_id, class_name) values (9, 'Submarine');
+insert into classes (class_id, class_name) values (10, 'Sloop');
+
+/*fuel types*/
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (1, 'Hydrogen', 'Biofuel');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (2, 'Gasoline', 'Diesel');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (3, 'Biofuel', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (4, 'Hydrogen', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (5, 'Gasoline', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (6, 'Biofuel', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (7, 'Diesel', 'Hydrogen');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (8, 'Electric', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (9, 'Gasoline', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (10, 'Diesel', 'Biofuel');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (11, 'Biofuel', null);
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (12, 'Diesel', 'Electric');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (13, 'Diesel', 'Electric');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (14, 'Hydrogen', 'Diesel');
+insert into fuel_type (fuel_id, fuel_type1, fuel_type2) values (15, 'Hydrogen', null);
