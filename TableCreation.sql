@@ -47,7 +47,7 @@ CREATE TABLE boatyard_facilities(
   facility_id SMALLINT REFERENCES facilities(facility_id) NOT NULL
 );
 
-CREATE TYPE B_SIZE ENUM('Small', 'Medium', 'Large');
+CREATE TYPE B_SIZE AS ENUM('Small', 'Medium', 'Large');
 
 CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
