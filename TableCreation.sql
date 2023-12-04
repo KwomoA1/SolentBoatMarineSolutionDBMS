@@ -1,6 +1,8 @@
+CREATE TYPE CUST_TYPE AS ENUM('Business', 'Individual');
+
 CREATE TABLE customer_details(
   customer_id SERIAL PRIMARY KEY,
-  customer_type ENUM NOT NULL,
+  customer_type CUST_TYPE NOT NULL,
   business_name VARCHAR(50),
   customer_fname VARCHAR(40),
   customer_lname VARCHAR(40),
