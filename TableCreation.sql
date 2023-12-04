@@ -33,7 +33,7 @@ CREATE TABLE boatyard_details(
   country VARCHAR(40) NOT NULL,
   address1 VARCHAR(60) NOT NULL,
   address2  VARCHAR(60),
-  postcode/zip CHAR(15),
+  postcode_zip CHAR(15),
   indoor_storage_capcity SMALLINT NOT NULL
 );
 
@@ -105,7 +105,7 @@ CREATE TABLE
     length_overall VARCHAR (20) NOT NULL,
     beam VARCHAR (20) NOT NULL,
     draft VARCHAR (20) NOT NULL,
-    cargo/tankers_capacity VARCHAR (15) NOT NULL
+    cargo_tankers_capacity VARCHAR (15) NOT NULL
     );
 
 CREATE TABLE
