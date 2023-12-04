@@ -29,8 +29,8 @@ CREATE TABLE boatyard_details(
   boatyard_id SERIA PRIMARY KEY,
   boatyard_name VARCHAR(100) NOT NULL,
   country VARCHAR(40) NOT NULL,
-  address 1 VARCHAR(60) NOT NULL,
-  address 2  VARCHAR(60),
+  address1 VARCHAR(60) NOT NULL,
+  address2  VARCHAR(60),
   postcode/zip CHAR(15),
   indoor_storage_capcity SMALLINT NOT NULL,
 );
