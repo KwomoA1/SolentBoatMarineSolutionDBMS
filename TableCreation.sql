@@ -1,3 +1,5 @@
+CREATE TYPE customerType AS ENUM ('Business', 'Individual')
+
 CREATE TABLE customer_details(
   customer_id SERIAL PRIMARY KEY,
   customer_type ENUM NOT NULL,
@@ -44,6 +46,9 @@ CREATE TABLE boatyard_facilities(
   boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
   facility_id SMALLINT REFERENCES facilities(facility_id) NOT NULL
 );
+
+
+CREATE TYPE allowedSize AS ENUM ('Small', 'Medium', 'Large');
 
 CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
