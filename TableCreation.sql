@@ -28,7 +28,7 @@ CREATE TABLE emergency_contact(
 );
 
 CREATE TABLE boatyard_details(
-  boatyard_id SERIA PRIMARY KEY,
+  boatyard_id SERIAL PRIMARY KEY,
   boatyard_name VARCHAR(100) NOT NULL,
   country VARCHAR(40) NOT NULL,
   address1 VARCHAR(60) NOT NULL,
@@ -47,10 +47,12 @@ CREATE TABLE boatyard_facilities(
   facility_id SMALLINT REFERENCES facilities(facility_id) NOT NULL
 );
 
+CREATE TYPE B_SIZE ENUM('Small', 'Medium', 'Large');
+
 CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
   boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
-  dock_allowed_boat_size ENUM NOT NULL,
+  dock_allowed_boat_size B_SIZE NOT NULL,
   wet_slips_max_capcity SMALLINT NOT NULL,
   dry_slips_max_capacity SMALLINT NOT NULL
 );
