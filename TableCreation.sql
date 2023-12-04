@@ -12,17 +12,17 @@ CREATE TABLE customer_details(
   postcode VARCHAR(15) NOT NULL,
   emailaddress VARCHAR(100),
   mobile_number CHAR(15) NOT NULL,
-  landline_number CHAR(15),
+  landline_number CHAR(15)
 );
 
 CREATE TABLE emergency_contact(
   emergency_contact_id SERIAL PRIMARY KEY,
-  customer_id INT REFERENCE customer_details(customer_id) NOT NULL,
+  customer_id INT REFERENCES customer_details(customer_id) NOT NULL,
   contact_fname VARCHAR(50) NOT NULL,
   contact_lname  VARCHAR(50) NOT NULL,
   contact_mobile  CHAR(15) NOT NULL,
   contact_landline CHAR(15),
-  contact_emailaddress  VARCHAR (100),
+  contact_emailaddress  VARCHAR (100)
 );
 
 CREATE TABLE boatyard_details(
@@ -32,25 +32,25 @@ CREATE TABLE boatyard_details(
   address1 VARCHAR(60) NOT NULL,
   address2  VARCHAR(60),
   postcode/zip CHAR(15),
-  indoor_storage_capcity SMALLINT NOT NULL,
+  indoor_storage_capcity SMALLINT NOT NULL
 );
 
 CREATE TABLE facilities(
   facility_id SERIAL PRIMARY KEY,
-  facility_name VARCHAR(40) NOT NULL,
+  facility_name VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE boatyard_facilities(
-  boatyard_id INT REFERENCE boatyard_details(boatyard_id) NOT NULL,
-  facility_id SMALLINT REFERENCE facilities*(facility_id) NOT NULL,
+  boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
+  facility_id SMALLINT REFERENCES facilities(facility_id) NOT NULL
 );
 
 CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
-  boatyard_id INT REFERENCE boatyard_details(boatyard_id) NOT NULL,
+  boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
   dock_allowed_boat_size ENUM NOT NULL,
   wet_slips_max_capcity SMALLINT NOT NULL,
-  dry_slips_max_capacity SMALLINT NOT NULL,
+  dry_slips_max_capacity SMALLINT NOT NULL
 );
 
 
