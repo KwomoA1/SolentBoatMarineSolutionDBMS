@@ -1,13 +1,57 @@
+CREATE TABLE customer_details(
+  customer_id SERIAL PRIMARY KEY,
+  customer_type ENUM NOT NULL,
+  business_name VARCHAR(50),
+  customer_fname VARCHAR(40),
+  customer_lname VARCHAR(40),
+  dob DATE,
+  country VARCHAR(40) NOT NULL,
+  address1 VARCHAR(60) NOT NULL,
+  address2 VARCHAR(50),
+  town VARCHAR(60) NOT NULL,
+  postcode VARCHAR(15) NOT NULL,
+  emailaddress VARCHAR(100),
+  mobile_number CHAR(15) NOT NULL,
+  landline_number CHAR(15),
+);
 
-CREATE TABLE STAFF_DETAILS(
-    STAFF_ ID SERIAL PRIMARY KEY 
-)
+CREATE TABLE emergency_contact(
+  emergency_contact_id SERIAL PRIMARY KEY,
+  customer_id INT REFERENCE customer_details(customer_id) NOT NULL,
+  contact_fname VARCHAR(50) NOT NULL,
+  contact_lname  VARCHAR(50) NOT NULL,
+  contact_mobile  CHAR(15) NOT NULL,
+  contact_landline CHAR(15),
+  contact_emailaddress  VARCHAR (100),
+);
 
+CREATE TABLE boatyard_details(
+  boatyard_id SERIA PRIMARY KEY,
+  boatyard_name VARCHAR(100) NOT NULL,
+  country VARCHAR(40) NOT NULL,
+  address 1 VARCHAR(60) NOT NULL,
+  address 2  VARCHAR(60),
+  postcode/zip CHAR(15),
+  indoor_storage_capcity SMALLINT NOT NULL,
+);
 
+CREATE TABLE facilities(
+  facility_id SERIAL PRIMARY KEY,
+  facility_name VARCHAR(40) NOT NULL,
+);
 
+CREATE TABLE boatyard_facilities(
+  boatyard_id INT REFERENCE boatyard_details(boatyard_id) NOT NULL,
+  facility_id SMALLINT REFERENCE facilities*(facility_id) NOT NULL,
+);
 
-
-
+CREATE TABLE dock_details(
+  dock_id SERIAL PRIMARY KEY,
+  boatyard_id INT REFERENCE boatyard_details(boatyard_id) NOT NULL,
+  dock_allowed_boat_size ENUM NOT NULL,
+  wet_slips_max_capcity SMALLINT NOT NULL,
+  dry_slips_max_capacity SMALLINT NOT NULL,
+);
 
 
 
