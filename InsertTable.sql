@@ -1,37 +1,30 @@
-INSERT INTO facilities (facility_id, facility_name) VALUES
-(facility_id, facility_name) values (1, 'Nogent-le-Rotrou'),
-(facility_id, facility_name) values (2, 'Schœlcher'),
-(facility_id, facility_name) values (3, 'Titay'),
-(facility_id, facility_name) values (4, 'Rābigh'),
-(facility_id, facility_name) values (5, 'Ford'),
-(facility_id, facility_name) values (6, 'Charenton-le-Pont'),
-(facility_id, facility_name) values (7, 'Cagnes-sur-Mer'),
-(facility_id, facility_name) values (8, 'Bandhagen'),
-(facility_id, facility_name) values (9, 'Andop'),
-(facility_id, facility_name) values (10, 'Palermo'),
-(facility_id, facility_name) values (11, 'Shijing'),
-(facility_id, facility_name) values (12, 'Huangzhuang'),
-(facility_id, facility_name) values (13, 'Lushnjë'),
-(facility_id, facility_name) values (14, 'Las Mercedes'),
-(facility_id, facility_name) values (15, 'Los Mangos');
-
-INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_current_capacity , wet_slips_max_capcity , dry_slips_current_capacity , dry_slips_max_capacity )
+INSERT INTO facilities (facility_id, facility_name) 
 VALUES
-(1, 1, 'Small', 3, 5, 9, 10),
-(2, 2, 'Medium', 9, 10, 5, 6),
-(3, 3, 'Small', 5, 7, 3, 5),
-(4, 4, 'Large', 4, 6, 6, 7),
-(5, 5, 'Small', 10, 7, 5, 8),
-(6, 6, 'Small', 6, 6, 5, 9),
-(7, 7, 'Small', 9, 14, 6, 10),
-(8, 8, 'Small', 4, 6, 8, 11),
-(9, 9, 'Small', 9, 11, 9, 14),
-(10, 10, 'Medium', 5, 7, 3, 12),
-(11, 11, 'Small', 6, 8, 6, 7),
-(12, 12, 'Medium', 5, 9, 4, 9),
-(13, 13, 'Medium', 6, 9, 5, 5),
-(14, 14, 'Large', 6, 7, 5, 5),
-(15, 15, 'Small', 10, 10, 3, 4);
+(1, 'Fuel station'),
+(2, 'Hoist'),
+(3, 'Crane'),
+(4, 'Cafeteria'),
+(5, 'Boat Ramp'),
+(6, 'Pump-station'),
+(7, 'Work-shop');
+
+INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_max_capcity, dry_slips_max_capacity)
+VALUES
+(1, 1, 'Small', 3, 9),
+(2, 2, 'Medium', 9, 5),
+(3, 3, 'Small', 5, 3),
+(4, 4, 'Large', 4, 6),
+(5, 5, 'Small', 10, 5),
+(6, 6, 'Small', 6, 5),
+(7, 7, 'Small', 9, 6),
+(8, 8, 'Small', 4, 8),
+(9, 9, 'Small', 9,9),
+(10, 10, 'Medium', 5, 3),
+(11, 11, 'Small', 6, 6),
+(12, 12, 'Medium', 5, 4),
+(13, 13, 'Medium', 6, 5),
+(14, 14, 'Large', 6, 5),
+(15, 15, 'Small', 10, 3);
 
 INSERT INTO service (service_id, service_description)
 VALUES
@@ -122,7 +115,7 @@ INSERT INTO boat_classes (boat_id, class_id) VALUES
 
 INSERT INTO hull_materials (hull_material_id, hull_material_name) VALUES
 (1, 'carbon fibre'),
-(2, 'steel'),
+(2, 'aluminum'),
 (3, 'steel'),
 (4, 'fibre glass'),
 (5, 'plastic');
@@ -163,18 +156,18 @@ INSERT INTO engines (engine_id, fuel_type, engine_type, engine_make, engine_mode
 
 INSERT INTO boat_engine (boat_id, engine_id)
 VALUES
-(1, 9);
-(2, 1);
-(3, 2);
-(4, 3);
-(5, 3);
-(6, 5);
-(7, 8);
-(8, 5);
-(9, 9);
-(10, 4);
-(11, 5);
-(12, 7);
-(13, 3);
-(14, 4);
+(1, 9),
+(2, 1),
+(3, 2),
+(4, 3),
+(5, 3),
+(6, 5),
+(7, 8),
+(8, 5),
+(9, 9),
+(10, 4),
+(11, 5),
+(12, 7),
+(13, 3),
+(14, 4),
 (15, 9);
