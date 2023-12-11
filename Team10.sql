@@ -1,8 +1,8 @@
 /* Solent Boats SQL code */
 /*
 Collaborators:
-Kwami Smith: UP2114687
-Robin: UP2123493
+Kwami Smith: uP2114687
+Robin: uP2123493
 Zac: up2114856
 */
 
