@@ -57,7 +57,7 @@ CREATE TABLE boatyard_details(
   address1 VARCHAR(60) NOT NULL,
   address2  VARCHAR(60),
   postcode_zip CHAR(15),
-  indoor_storage_capcity SMALLINT NOT NULL
+  indoor_storage_capacity SMALLINT NOT NULL
 );
 
 CREATE TABLE facilities(
@@ -149,10 +149,8 @@ CREATE TABLE hull_materials(
 ); 
 
 CREATE TABLE boat_hullmaterials(
-    boat_id INTEGER NOT NULL,
-    hull_material_id INTEGER NOT NULL
-    FOREIGN KEY(boat_id)REFERENCES boats(boat_id),
-    FOREIGN KEY(hull_material_id)REFERENCES hull_materials(hull_material_id)
+    boat_id INTEGER NOT NULL REFERENCES boats(boat_id),
+    hull_material_id INTEGER NOT NULL REFERENCES hull_materials(hull_material_id)
 ); 
 
 CREATE TABLE fuel_types(
@@ -166,7 +164,7 @@ CREATE TABLE engines(
     fuel_id INTEGER NOT NULL REFERENCES fuel_types(fuel_id),
     engine_type VARCHAR(40) NOT NULL, 
     engine_make VARCHAR(40) NOT NULL,
-    enigne_model VARCHAR(40) NOT NULL 
+    engine_model VARCHAR(40) NOT NULL 
 );
 
 CREATE TABLE boats_engine(
@@ -225,7 +223,7 @@ VALUES
 (7, 'Work-shop');
 
 /*boatyard details*/
-INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postcode_zip, indoors_storage_capcity)
+INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postcode_zip, indoor_storage_capacity)
 VALUES
 (1, 'Blue Bill Park', 'Poland', '8 Orin Park', null, '05-090', 12),
 (2, 'Hazelcrest', 'Ukraine', '635 Dennis Alley', null, null, 13),
