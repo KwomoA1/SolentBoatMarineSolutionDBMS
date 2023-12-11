@@ -236,41 +236,6 @@ INSERT INTO boat_hullmaterials (boat_id, hull_material_id) VALUES
 (14, 5),
 (15, 2);
 
-INSERT INTO engines (engine_id, fuel_type, engine_type, engine_make, engine_model) VALUES
-(1, 'Biofuel', 'magna', 'consequat', 'venenatis'),
-(2, 'Electric', 'nisi eu', 'vulputate luctus', 'quisque'),
-(3, 'Hydrogen', 'nibh', 'felis', 'diam erat'),
-(4, 'Diesel', 'interdum', 'at turpis', 'quam sapien'),
-(5, 'Electric', 'erat', 'sem', 'ornare'),
-(6, 'Gasoline', 'nonummy integer', 'magna', 'feugiat'),
-(7, 'Biofuel', 'orci eget', 'quis', 'nec euismod'),
-(8, 'Biofuel', 'porttitor lacus', 'luctus', 'pede justo'),
-(9, 'Hydrogen', 'eget orci', 'nulla tellus', 'dictumst etiam'),
-(10, 'Diesel', 'nec nisi', 'mauris enim', 'nulla neque'),
-(11, 'Hydrogen', 'porttitor', 'sollicitudin', 'primis'),
-(12, 'Biofuel', 'congue', 'sed vestibulum', 'nulla'),
-(13, 'Gasoline', 'mauris', 'in', 'vivamus'),
-(14, 'Biofuel', 'sit', 'felis fusce', 'vestibulum ante'),
-(15, 'Gasoline', 'felis', 'nunc purus', 'convallis');
-
-INSERT INTO boat_engine (boat_id, engine_id)
-VALUES
-(1, 9),
-(2, 1),
-(3, 2),
-(4, 3),
-(5, 3),
-(6, 5),
-(7, 8),
-(8, 5),
-(9, 9),
-(10, 4),
-(11, 5),
-(12, 7),
-(13, 3),
-(14, 4),
-(15, 9);
-
 /*roles*/
 INSERT INTO roles(role_id, role_name)
 VALUES
@@ -279,25 +244,6 @@ VALUES
 (3, 'Boat Electrician'),
 (4, 'Boat Painter'),
 (5, 'Boat Detailer');
-
-/*customer details*/
-INSERT INTO customer_details (customer_id, customer_type, business_name, customer_fname, customer_lname, dob, country, address1, address2, town, postcode, email_address, mobile_number, landline_number)
-VALUES
-(1, 'Business', 'Bogisich, Jones and Sauer', 'Patric', 'Chalmers', '3/12/2002', 'France', '9378 Main Court', 'Apt 561', 'Roubaix', '59100', 'pchalmers0@issuu.com', '649-149-7094', null),
-(2, 'Business', 'Daugherty and Sons', 'Goldi', 'Tovey', '1/4/1993', 'Brazil', '3011 Magdeline Drive', 'PO Box 91647', 'Breves', '68800-000', 'gtovey1@g.co', '798-811-1088', null),
-(3, 'Business', 'Larson, O''Keefe and Herzog', 'Desiree', 'Dyhouse', '11/5/1990', 'Morocco', '79 Gateway Way', 'Room 1310', 'Saddina', null, 'ddyhouse2@is.gd', '786-709-2088', null),
-(4, 'Individual', 'Waters LLC', 'Zach', 'Dict', '8/2/1994', 'China', '614 Becker Parkway', null, 'Xibu', null, 'zdict3@hubpages.com', '147-540-7123', null),
-(5, 'Individual', 'Kuhlman, Wilkinson and Beatty', 'Lynnett', 'Shaefer', '11/16/1983', 'Philippines', '40 Fulton Hill', 'PO Box 85131', 'Eustaquio Lopez', '6116', 'lshaefer4@cnet.com', '108-552-0990', null),
-(6, 'Individual', 'Hackett Group', 'Philbert', 'Garnsworth', '8/1/2000', 'Honduras', '852 Messerschmidt Alley', null, 'Casa Quemada', null, 'pgarnsworth5@so-net.ne.jp', '488-389-8098', null),
-(7, 'Business', 'Marvin-Schoen', 'Benito', 'Kenny', '2/25/2005', 'Russia', '06 Melody Drive', null, 'Lakinsk', '662133', 'bkenny6@slashdot.org', '866-677-0794', null),
-(8, 'Business', 'Deckow-Rutherford', 'Gertrud', 'Bresner', '5/5/1998', 'Ukraine', '53 Scoville Road', 'PO Box 44319', 'Sheshory', null, 'gbresner7@cnbc.com', '364-324-5964', null),
-(9, 'Individual', 'Heathcote, Wolf and King', 'Perry', 'Braunle', '7/17/1971', 'Colombia', '80 5th Court', 'Room 89', 'Giraldo', '057047', 'pbraunle8@redcross.org', '420-664-6641', null),
-(10, 'Individual', 'Kerluke, Abernathy and Green', 'Donnie', 'Neylan', '10/23/2005', 'Sweden', '961 Prairieview Parkway', 'PO Box 16241', 'Örebro', '702 21', 'dneylan9@theguardian.com', '966-687-7661', '381-969-7684'),
-(11, 'Individual', 'Roberts Group', 'Wolf', 'Wildash', '11/25/2004', 'Poland', '412 Westend Court', 'Apt 1516', 'Lubichowo', '83-240', 'wwildasha@bigcartel.com', '580-823-6663', null),
-(12, 'Business', 'Wiza, Brekke and Prohaska', 'Portie', 'Stutt', '7/23/1972', 'Indonesia', '78 Longview Pass', '5th Floor', 'Mursaba', null, 'pstuttb@tiny.cc', '306-873-0638', null),
-(13, 'Individual', 'Kautzer Inc', 'Pippy', 'Ferriday', '5/12/1987', 'Sweden', '0286 Riverside Parkway', null, 'Enskede', '122 44', 'pferridayc@ycombinator.com', '604-663-3756', null),
-(14, 'Business', 'Veum, Mraz and Williamson', 'Fabian', 'Somersett', '10/27/1989', 'Cuba', '86916 Superior Way', null, 'Santa Cruz del Norte', null, null, '481-652-0432', '651-409-1958'),
-(15, 'Individual', 'Daugherty, Anderson and Kohler', 'Hayes', 'Vamplus', '6/21/1979', 'Serbia', '0639 Evergreen Terrace', null, 'Rača', null, null, '416-570-0419', '118-400-3803');
 
 /*emergency contact*/
 INSERT INTO emergency_contact (emergency_contact_id, customer_id, contact_fname, contact_lname, contact_mobile, contact_landline, contact_emailaddress)
@@ -318,21 +264,6 @@ VALUES
 (14, 15, 'Sòng', 'Isacsson', '536-567-1235', '218-836-1186', null),
 (15, 1, 'Andrée', 'Belch', '307-450-9977', null, null);
 
-
-/*classes*/
-INSERT INTO classes (class_id, class_name)
-VALUES
-(1, 'Sailboat'),
-(2, 'Motor Yacht'),
-(3, 'Barge'),
-(4, 'Fishing Trawler'),
-(5, 'Military'),
-(6, 'Catamaran'),
-(7, 'Ferry'),
-(8, 'Cruise Ship'),
-(9, 'Submarine'),
-(10, 'Sloop');
-
 /*fuel types*/
 INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)
 VALUES
@@ -351,3 +282,38 @@ VALUES
 (13, 'Diesel', 'Electric'),
 (14, 'Hydrogen', 'Diesel'),
 (15, 'Hydrogen', null);
+
+INSERT INTO engines (engine_id, fuel_type, engine_type, engine_make, engine_model) VALUES
+(1, 'Biofuel', 'magna', 'consequat', 'venenatis'),
+(2, 'Electric', 'nisi eu', 'vulputate luctus', 'quisque'),
+(3, 'Hydrogen', 'nibh', 'felis', 'diam erat'),
+(4, 'Diesel', 'interdum', 'at turpis', 'quam sapien'),
+(5, 'Electric', 'erat', 'sem', 'ornare'),
+(6, 'Gasoline', 'nonummy integer', 'magna', 'feugiat'),
+(7, 'Biofuel', 'orci eget', 'quis', 'nec euismod'),
+(8, 'Biofuel', 'porttitor lacus', 'luctus', 'pede justo'),
+(9, 'Hydrogen', 'eget orci', 'nulla tellus', 'dictumst etiam'),
+(10, 'Diesel', 'nec nisi', 'mauris enim', 'nulla neque'),
+(11, 'Hydrogen', 'porttitor', 'sollicitudin', 'primis'),
+(12, 'Biofuel', 'congue', 'sed vestibulum', 'nulla'),
+(13, 'Gasoline', 'mauris', 'in', 'vivamus'),
+(14, 'Biofuel', 'sit', 'felis fusce', 'vestibulum ante'),
+(15, 'Gasoline', 'felis', 'nunc purus', 'convallis');
+
+INSERT INTO boats_engine (boat_id, engine_id)
+VALUES
+(1, 9),
+(2, 1),
+(3, 2),
+(4, 3),
+(5, 3),
+(6, 5),
+(7, 8),
+(8, 5),
+(9, 9),
+(10, 4),
+(11, 5),
+(12, 7),
+(13, 3),
+(14, 4),
+(15, 9);
