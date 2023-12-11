@@ -143,7 +143,7 @@ CREATE TABLE engines(
     fuel_id INTEGER NOT NULL REFERENCES fuel_types(fuel_id),
     engine_type VARCHAR(40) NOT NULL, 
     engine_make VARCHAR(40) NOT NULL,
-    enigne_model VARCHAR(40) NOT NULL 
+    engine_model VARCHAR(40) NOT NULL 
 );
 
 CREATE TABLE boats_engine(

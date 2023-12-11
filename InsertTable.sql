@@ -265,7 +265,7 @@ VALUES
 (15, 1, 'Andrée', 'Belch', '307-450-9977', null, null);
 
 /*fuel types*/
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)
+INSERT INTO fuel_types (fuel_id, fuel_type1, fuel_type2)
 VALUES
 (1, 'Hydrogen', 'Biofuel'),
 (2, 'Gasoline', 'Diesel'),
@@ -283,22 +283,22 @@ VALUES
 (14, 'Hydrogen', 'Diesel'),
 (15, 'Hydrogen', null);
 
-INSERT INTO engines (engine_id, fuel_type, engine_type, engine_make, engine_model) VALUES
-(1, 'Biofuel', 'magna', 'consequat', 'venenatis'),
-(2, 'Electric', 'nisi eu', 'vulputate luctus', 'quisque'),
-(3, 'Hydrogen', 'nibh', 'felis', 'diam erat'),
-(4, 'Diesel', 'interdum', 'at turpis', 'quam sapien'),
-(5, 'Electric', 'erat', 'sem', 'ornare'),
-(6, 'Gasoline', 'nonummy integer', 'magna', 'feugiat'),
-(7, 'Biofuel', 'orci eget', 'quis', 'nec euismod'),
-(8, 'Biofuel', 'porttitor lacus', 'luctus', 'pede justo'),
-(9, 'Hydrogen', 'eget orci', 'nulla tellus', 'dictumst etiam'),
-(10, 'Diesel', 'nec nisi', 'mauris enim', 'nulla neque'),
-(11, 'Hydrogen', 'porttitor', 'sollicitudin', 'primis'),
-(12, 'Biofuel', 'congue', 'sed vestibulum', 'nulla'),
-(13, 'Gasoline', 'mauris', 'in', 'vivamus'),
-(14, 'Biofuel', 'sit', 'felis fusce', 'vestibulum ante'),
-(15, 'Gasoline', 'felis', 'nunc purus', 'convallis');
+INSERT INTO engines (engine_id, fuel_id, engine_type, engine_make, engine_model) VALUES
+(1, 1, 'magna', 'consequat', 'venenatis'),
+(2, 3, 'nisi eu', 'vulputate luctus', 'quisque'),
+(3, 2, 'nibh', 'felis', 'diam erat'),
+(4, 6, 'interdum', 'at turpis', 'quam sapien'),
+(5, 5, 'erat', 'sem', 'ornare'),
+(6, 4, 'nonummy integer', 'magna', 'feugiat'),
+(7, 7, 'orci eget', 'quis', 'nec euismod'),
+(8, 8, 'porttitor lacus', 'luctus', 'pede justo'),
+(9, 8, 'eget orci', 'nulla tellus', 'dictumst etiam'),
+(10, 9, 'nec nisi', 'mauris enim', 'nulla neque'),
+(11, 10, 'porttitor', 'sollicitudin', 'primis'),
+(12, 11, 'congue', 'sed vestibulum', 'nulla'),
+(13, 12, 'mauris', 'in', 'vivamus'),
+(14, 14, 'sit', 'felis fusce', 'vestibulum ante'),
+(15, 14, 'felis', 'nunc purus', 'convallis');
 
 INSERT INTO boats_engine (boat_id, engine_id)
 VALUES
