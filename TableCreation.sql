@@ -127,7 +127,7 @@ CREATE TABLE hull_materials(
 
 CREATE TABLE boat_hullmaterials(
     boat_id INTEGER NOT NULL,
-    hull_material_id INTEGER NOT NULL
+    hull_material_id INTEGER NOT NULL,
     FOREIGN KEY(boat_id)REFERENCES boats(boat_id),
     FOREIGN KEY(hull_material_id)REFERENCES hull_materials(hull_material_id)
 ); 
