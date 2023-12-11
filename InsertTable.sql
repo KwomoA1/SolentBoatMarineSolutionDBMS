@@ -239,72 +239,82 @@ VALUES
 (15, 1, 'Andrée', 'Belch', '307-450-9977', null, null);
 
 /*boatyard details*/
-INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity)(1, 'Blue Bill Park', 'Poland', '8 Orin Park', null, '05-090', 12);
-INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity)(2, 'Hazelcrest', 'Ukraine', '635 Dennis Alley', null, null, 13);
-INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity)(3, 'Crownhardt', 'Greece', '2290 Columbus Hill', '18th Floor', null, 13);
-INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity)(4, 'Colorado', 'Sweden', '30187 Burrows Pass', '9th Floor', '542 95', 10);
-INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity)(5, 'Dawn', 'Peru', '2889 Anhalt Pass', 'Suite 90', null, 10);
+INSERT INTO boatyard_details (boatyard_id, boatyard_name, country, address1, address2, postalcode_zip, indoor_storage_capacity)
+VALUES
+(1, 'Blue Bill Park', 'Poland', '8 Orin Park', null, '05-090', 12),
+(2, 'Hazelcrest', 'Ukraine', '635 Dennis Alley', null, null, 13),
+(3, 'Crownhardt', 'Greece', '2290 Columbus Hill', '18th Floor', null, 13),
+(4, 'Colorado', 'Sweden', '30187 Burrows Pass', '9th Floor', '542 95', 10),
+(5, 'Dawn', 'Peru', '2889 Anhalt Pass', 'Suite 90', null, 10);
 
 /*bookings*/
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(1, 14, 9, 3, 'Pre-booked', '11/12/2023', 'The boat experiences frequent engine stalls, disrupting smooth navigation and necessitating a thorough inspection of the engine components.', 'Completed');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(2, 15, 3, 2, 'Pre-booked', '3/20/2023', 'The propeller shows signs of wear and tear, affecting the boats performance and requiring replacement or repair to ensure optimal propulsion.', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(3, 12, 3, 5, 'Emergency Service', '9/7/2023', 'Water leakage is observed in the hull, indicating potential structural issues. Repair work is essential to prevent further damage and maintain buoyancy.', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(4, 10, 1, 4, 'Pre-booked', '6/21/2023', 'The boats electrical system is malfunctioning, causing issues with navigation lights, instruments, or the overall power supply. An electrical diagnosis and repairs are needed.', 'On-going');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(5, 10, 2, 4, 'Emergency Service', '10/18/2023', 'The boat experiences issues with the fuel system, such as clogged filters or a faulty fuel pump, leading to engine inefficiency and potential breakdowns.', 'Completed');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(6, 11, 1, 3, 'Emergency Service', '5/6/2023', 'The rudder is misaligned, impacting steering and making it challenging to control the boat. Alignment adjustments and potential replacement are necessary.', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(7, 3, 12, 5, 'Pre-booked', '6/24/2023', 'The bilge pump is not functioning correctly, risking water accumulation in the bilge area. Prompt repair or replacement is crucial to prevent flooding and potential damage.', 'On-going');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(8, 11, 15, 1, 'Pre-booked', '6/19/2023', 'The boats fiberglass structure has developed cracks, compromising its integrity. Fiberglass repairs are essential to restore strength and prevent further damage', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(9, 6, 14, 2, 'Pre-booked', '8/27/2023', 'Various metal components, such as hinges, bolts, or railings, show signs of corrosion. Replacement or anti-corrosion treatment is needed to ensure structural stability.', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(10, 8, 8, 5, 'Emergency Service', '4/29/2023', 'The stern of the boat is noticeably lower in the water, suggesting a possible weight distribution issue or water accumulation. Investigation and corrective measures are required.', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(11, 4, 15, 2, 'Pre-booked', '12/10/2022', 'Critical navigation equipment, such as GPS or sonar systems, is not functioning properly. Repairs or replacements are necessary to ensure safe navigation.', 'Scheduled');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(12, 1, 9, 1, 'Pre-booked', '7/27/2023', 'The boat emits an unusual amount of smoke from the exhaust, indicating potential engine problems. Diagnostic testing and engine repairs are essential.', 'Completed');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(13, 9, 11, 1, 'Emergency Service', '10/25/2023', 'Wires in the boats electrical system are frayed or damaged, posing a risk of short circuits or electrical failures. Rewiring and insulation replacement are needed.', 'Completed');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(14, 9, 13, 1, 'Pre-booked', '3/16/2023', 'The boats steering mechanism is stiff or unresponsive, making navigation difficult. Inspection and lubrication of the steering components are required.', 'Completed');
-INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)(15, 5, 8, 1, 'Pre-booked', '9/27/2023', 'The boats upholstery shows signs of water damage, affecting the aesthetic appeal and comfort. Drying, cleaning, and potential upholstery replacement are necessary.', 'On-going');
+INSERT INTO bookings (bookings_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)
+VALUES
+(1, 14, 9, 3, 'Pre-booked', '11/12/2023', 'The boat experiences frequent engine stalls, disrupting smooth navigation and necessitating a thorough inspection of the engine components.', 'Completed'),
+(2, 15, 3, 2, 'Pre-booked', '3/20/2023', 'The propeller shows signs of wear and tear, affecting the boats performance and requiring replacement or repair to ensure optimal propulsion.', 'Scheduled'),
+(3, 12, 3, 5, 'Emergency Service', '9/7/2023', 'Water leakage is observed in the hull, indicating potential structural issues. Repair work is essential to prevent further damage and maintain buoyancy.', 'Scheduled'),
+(4, 10, 1, 4, 'Pre-booked', '6/21/2023', 'The boats electrical system is malfunctioning, causing issues with navigation lights, instruments, or the overall power supply. An electrical diagnosis and repairs are needed.', 'On-going'),
+(5, 10, 2, 4, 'Emergency Service', '10/18/2023', 'The boat experiences issues with the fuel system, such as clogged filters or a faulty fuel pump, leading to engine inefficiency and potential breakdowns.', 'Completed'),
+(6, 11, 1, 3, 'Emergency Service', '5/6/2023', 'The rudder is misaligned, impacting steering and making it challenging to control the boat. Alignment adjustments and potential replacement are necessary.', 'Scheduled'),
+(7, 3, 12, 5, 'Pre-booked', '6/24/2023', 'The bilge pump is not functioning correctly, risking water accumulation in the bilge area. Prompt repair or replacement is crucial to prevent flooding and potential damage.', 'On-going'),
+(8, 11, 15, 1, 'Pre-booked', '6/19/2023', 'The boats fiberglass structure has developed cracks, compromising its integrity. Fiberglass repairs are essential to restore strength and prevent further damage', 'Scheduled'),
+(9, 6, 14, 2, 'Pre-booked', '8/27/2023', 'Various metal components, such as hinges, bolts, or railings, show signs of corrosion. Replacement or anti-corrosion treatment is needed to ensure structural stability.', 'Scheduled'),
+(10, 8, 8, 5, 'Emergency Service', '4/29/2023', 'The stern of the boat is noticeably lower in the water, suggesting a possible weight distribution issue or water accumulation. Investigation and corrective measures are required.', 'Scheduled'),
+(11, 4, 15, 2, 'Pre-booked', '12/10/2022', 'Critical navigation equipment, such as GPS or sonar systems, is not functioning properly. Repairs or replacements are necessary to ensure safe navigation.', 'Scheduled'),
+(12, 1, 9, 1, 'Pre-booked', '7/27/2023', 'The boat emits an unusual amount of smoke from the exhaust, indicating potential engine problems. Diagnostic testing and engine repairs are essential.', 'Completed'),
+(13, 9, 11, 1, 'Emergency Service', '10/25/2023', 'Wires in the boats electrical system are frayed or damaged, posing a risk of short circuits or electrical failures. Rewiring and insulation replacement are needed.', 'Completed'),
+(14, 9, 13, 1, 'Pre-booked', '3/16/2023', 'The boats steering mechanism is stiff or unresponsive, making navigation difficult. Inspection and lubrication of the steering components are required.', 'Completed'),
+(15, 5, 8, 1, 'Pre-booked', '9/27/2023', 'The boats upholstery shows signs of water damage, affecting the aesthetic appeal and comfort. Drying, cleaning, and potential upholstery replacement are necessary.', 'On-going');
 
 
 /*boats*/
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(1, 13, 4, 6, 'Dry Slip', 'Medium', 'Commercial', 'Saudra', 417699, '5/4/1993', 184, 85, 175, 397);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(2, 11, 1, 9, 'Indoor', 'Medium', 'Commercial', 'Timothea', 951237, '8/20/1982', 292, 137, 479, 432);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(3, 15, 4, 8, 'Indoor', 'Large', 'Private', 'Connie', 336967, '9/26/1978', 377, 469, 461, 237);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(4, 9, 4, 4, 'Dry Slip', 'Large', 'Commercial', 'Kendra', 304266, '5/30/1945', 435, 261, 276, 496);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(5, 8, 1, 3, 'Wet Slip', 'Large', 'Private', 'Danika', 949416, '8/7/1952', 69, 74, 468, 93);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(6, 13, 2, 4, 'Indoor', 'Medium', 'Commercial', 'Chelsea', 848229, '7/31/1949', 496, 98, 384, 460);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(7, 12, 5, 8, 'Wet Slip', 'Medium', 'Private', 'Keriann', 172324, '10/23/1907', 488, 11, 334, 64);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(8, 7, 2, 4, 'Wet Slip', 'Medium', 'Commercial', 'Kattie', 959562, '7/9/1909', 400, 499, 192, 348);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(9, 11, 3, 11, 'Dry Slip', 'Medium', 'Commercial', 'Olwen', 258571, '12/7/1916', 300, 102, 371, 25);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(10, 14, 5, 14, 'Indoor', 'Large', 'Commercial', 'Sally', 982831, '11/14/1930', 399, 176, 372, 29);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(11, 7, 2, 12, 'Indoor', 'Medium', 'Commercial', 'Barbara', 248747, '10/7/1999', 135, 339, 274, 154);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(12, 14, 5, 7, 'Wet Slip', 'Small', 'Private', 'Sissie', 464049, '1/5/1978', 466, 323, 177, 118);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(13, 11, 2, 8, 'Indoor', 'Small', 'Private', 'Mara', 249078, '7/13/1948', 172, 121, 68, 95);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(14, 2, 4, 8, 'Wet Slip', 'Medium', 'Commercial', 'Aindrea', 976396, '7/2/1940', 322, 356, 178, 294);
-INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)(15, 12, 1, 12, 'Dry Slip', 'Small', 'Commercial', 'Beverly', 311251, '12/18/1974', 126, 293, 422, 346);
+INSERT INTO boats (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length overall, beam, draft, cargo_tankers_capacity)
+VALUES
+(1, 13, 4, 6, 'Dry Slip', 'Medium', 'Commercial', 'Saudra', 417699, '5/4/1993', 184, 85, 175, 397),
+(2, 11, 1, 9, 'Indoor', 'Medium', 'Commercial', 'Timothea', 951237, '8/20/1982', 292, 137, 479, 432),
+(3, 15, 4, 8, 'Indoor', 'Large', 'Private', 'Connie', 336967, '9/26/1978', 377, 469, 461, 237),
+(4, 9, 4, 4, 'Dry Slip', 'Large', 'Commercial', 'Kendra', 304266, '5/30/1945', 435, 261, 276, 496),
+(5, 8, 1, 3, 'Wet Slip', 'Large', 'Private', 'Danika', 949416, '8/7/1952', 69, 74, 468, 93),
+(6, 13, 2, 4, 'Indoor', 'Medium', 'Commercial', 'Chelsea', 848229, '7/31/1949', 496, 98, 384, 460),
+(7, 12, 5, 8, 'Wet Slip', 'Medium', 'Private', 'Keriann', 172324, '10/23/1907', 488, 11, 334, 64),
+(8, 7, 2, 4, 'Wet Slip', 'Medium', 'Commercial', 'Kattie', 959562, '7/9/1909', 400, 499, 192, 348),
+(9, 11, 3, 11, 'Dry Slip', 'Medium', 'Commercial', 'Olwen', 258571, '12/7/1916', 300, 102, 371, 25),
+(10, 14, 5, 14, 'Indoor', 'Large', 'Commercial', 'Sally', 982831, '11/14/1930', 399, 176, 372, 29),
+(11, 7, 2, 12, 'Indoor', 'Medium', 'Commercial', 'Barbara', 248747, '10/7/1999', 135, 339, 274, 154),
+(12, 14, 5, 7, 'Wet Slip', 'Small', 'Private', 'Sissie', 464049, '1/5/1978', 466, 323, 177, 118),
+(13, 11, 2, 8, 'Indoor', 'Small', 'Private', 'Mara', 249078, '7/13/1948', 172, 121, 68, 95),
+(14, 2, 4, 8, 'Wet Slip', 'Medium', 'Commercial', 'Aindrea', 976396, '7/2/1940', 322, 356, 178, 294),
+(15, 12, 1, 12, 'Dry Slip', 'Small', 'Commercial', 'Beverly', 311251, '12/18/1974', 126, 293, 422, 346);
 
 /*classes*/
-INSERT INTO classes (class_id, class_name)(1, 'Sailboat');
-INSERT INTO classes (class_id, class_name)(2, 'Motor Yacht');
-INSERT INTO classes (class_id, class_name)(3, 'Barge');
-INSERT INTO classes (class_id, class_name)(4, 'Fishing Trawler');
-INSERT INTO classes (class_id, class_name)(5, 'Military');
-INSERT INTO classes (class_id, class_name)(6, 'Catamaran');
-INSERT INTO classes (class_id, class_name)(7, 'Ferry');
-INSERT INTO classes (class_id, class_name)(8, 'Cruise Ship');
-INSERT INTO classes (class_id, class_name)(9, 'Submarine');
-INSERT INTO classes (class_id, class_name)(10, 'Sloop');
+INSERT INTO classes (class_id, class_name)
+VALUES
+(1, 'Sailboat'),
+(2, 'Motor Yacht'),
+(3, 'Barge'),
+(4, 'Fishing Trawler'),
+(5, 'Military'),
+(6, 'Catamaran'),
+(7, 'Ferry'),
+(8, 'Cruise Ship'),
+(9, 'Submarine'),
+(10, 'Sloop');
 
 /*fuel types*/
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(1, 'Hydrogen', 'Biofuel');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(2, 'Gasoline', 'Diesel');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(3, 'Biofuel', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(4, 'Hydrogen', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(5, 'Gasoline', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(6, 'Biofuel', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(7, 'Diesel', 'Hydrogen');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(8, 'Electric', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(9, 'Gasoline', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(10, 'Diesel', 'Biofuel');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(11, 'Biofuel', null);
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(12, 'Diesel', 'Electric');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(13, 'Diesel', 'Electric');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(14, 'Hydrogen', 'Diesel');
-INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)(15, 'Hydrogen', null);
+INSERT INTO fuel_type (fuel_id, fuel_type1, fuel_type2)
+VALUES
+(1, 'Hydrogen', 'Biofuel'),
+(2, 'Gasoline', 'Diesel'),
+(3, 'Biofuel', null),
+(4, 'Hydrogen', null),
+(5, 'Gasoline', null),
+(6, 'Biofuel', null),
+(7, 'Diesel', 'Hydrogen'),
+(8, 'Electric', null),
+(9, 'Gasoline', null),
+(10, 'Diesel', 'Biofuel'),
+(11, 'Biofuel', null),
+(12, 'Diesel', 'Electric'),
+(13, 'Diesel', 'Electric'),
+(14, 'Hydrogen', 'Diesel'),
+(15, 'Hydrogen', null);
