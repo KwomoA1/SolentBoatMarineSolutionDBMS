@@ -563,7 +563,7 @@ resource management tasks */
 SELECT staff_id AS "ID", CONCAT(staff_fname, ' ', staff_lname) AS "Staff Members" 
 FROM staff_details
 JOIN boatyard_details ON staff_details.boatyard_id = boatyard_details.boatyard_id
-WHERE boatyard_details.boatyard_name = 'Blue Bill Park';
+WHERE boatyard_details.boatyard_name IN (SELECT boatyard_name FROM boatyard_details WHERE boatyard_name = ('Blue Bill Park'));
 
 /* Query 2 */
 
@@ -587,7 +587,7 @@ FROM staff_roles
 JOIN roles ON roles.role_id = staff_roles.role_id
 JOIN staff_details ON staff_roles.staff_id = staff_details.staff_id
 JOIN boatyard_details ON boatyard_details.boatyard_id = staff_details.boatyard_id
-WHERE roles.role_name = 'Boat Mechanic'
+WHERE roles.role_name IN (SELECT role_name FROM roles WHERE role_name = ('Boat Mechanic'))
 GROUP BY boatyard_details.boatyard_id;
 
 --Query 4
@@ -597,7 +597,7 @@ SELECT boatyard_details.boatyard_name AS "Boatyard Name", dock_details.dock_id A
 FROM boatyard_details
 JOIN dock_details
 ON boatyard_details.boatyard_id = dock_details.boatyard_id
-WHERE boatyard_details.country = ('Poland')
+WHERE boatyard_details.country IN (SELECT country FROM boatyard_details WHERE country = ('Poland'))
 ORDER BY dock_details.dock_id;
 
 
@@ -608,5 +608,17 @@ SELECT customer_details.customer_id AS "Customer ID", customer_details.business_
 FROM customer_details
 JOIN boats
 ON customer_details.customer_id = boats.customer_id
-WHERE customer_details.customer_type = ('Business')
+WHERE customer_details.customer_type IN (SELECT customer_type FROM customer_details WHERE customer_type =  ('Business'))
 ORDER BY customer_details.customer_id;
+
+--Query 6 
+
+-- This query allows you to search up a customer by their ID and then find the boats under their name/assosiated with them as well as it's booking status.
+SELECT customer_details.customer_id AS "Customer ID", boats.boat_id AS "Boat ID", boats.boat_name AS "Boat Name", boats.boat_size_class AS "Boat Class", boats.model AS "Boat Model", bookings.booking_status AS "Booking Status"
+FROM customer_details
+JOIN boats
+ON customer_details.customer_id = boats.customer_id
+JOIN bookings
+ON customer_details.customer_id = bookings.customer_id
+WHERE customer_details.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
+ORDER BY boats.boat_id;
