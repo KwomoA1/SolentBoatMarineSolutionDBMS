@@ -29,5 +29,7 @@ JOIN boats
 ON customer_details.customer_id = boats.customer_id
 JOIN bookings
 ON customer_details.customer_id = bookings.customer_id
-WHERE customer_details.customer_id = 14
+WHERE customer_details.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
 ORDER BY boats.boat_id;
+
+
