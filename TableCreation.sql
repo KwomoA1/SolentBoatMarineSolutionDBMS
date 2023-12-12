@@ -186,3 +186,4 @@ CREATE TABLE staff_task(
     FOREIGN KEY(service_id) REFERENCES service(service_id),
     FOREIGN KEY(staff_id) REFERENCES staff_details(staff_id)
 );
+
