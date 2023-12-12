@@ -560,9 +560,11 @@ Queries
 and IDs of all staff on their site, this could be useful for human 
 resource management tasks */
 
-SELECT staff_id AS "ID", CONCAT(staff_fname, ' ', staff_lname) AS "Staff Members" 
+SELECT 
+  staff_id AS "ID", 
+  CONCAT(staff_fname, ' ', staff_lname) AS "Staff Members" 
 FROM staff_details
-JOIN boatyard_details ON staff_details.boatyard_id = boatyard_details.boatyard_id
+  JOIN boatyard_details ON staff_details.boatyard_id = boatyard_details.boatyard_id
 WHERE boatyard_details.boatyard_name IN (SELECT boatyard_name FROM boatyard_details WHERE boatyard_name = ('Blue Bill Park'));
 
 /* Query 2 */
@@ -570,10 +572,15 @@ WHERE boatyard_details.boatyard_name IN (SELECT boatyard_name FROM boatyard_deta
 /* Query 2 is designed so that managers can list all scheduled tasks in the future,
 this can help with scheduling and procurement */
 
-SELECT booking_id AS "Booking ID", boat_name AS "Boat", boatyard_name AS "Boatyard", booking_date AS "Booking Date", issue_description AS "Issue Description"
+SELECT 
+  booking_id AS "Booking ID", 
+  boat_name AS "Boat", 
+  boatyard_name AS "Boatyard", 
+  booking_date AS "Booking Date", 
+  issue_description AS "Issue Description"
 FROM bookings
-JOIN boats ON boats.boat_id = bookings.boat_id
-JOIN boatyard_details ON boatyard_details.boatyard_id = bookings.boatyard_id
+  JOIN boats ON boats.boat_id = bookings.boat_id
+  JOIN boatyard_details ON boatyard_details.boatyard_id = bookings.boatyard_id
 WHERE booking_type = 'Pre-booked' AND booking_status = 'Scheduled';
 
 /* Query 3 */
@@ -582,21 +589,26 @@ WHERE booking_type = 'Pre-booked' AND booking_status = 'Scheduled';
 in this case, boat mechanics, are available. This has then been split into how many are on each site,
 as this can then be used to help decide which place is best for certain jobs for ships */
 
-SELECT count(staff_roles.staff_id) AS "Number of Boat Mechanics", boatyard_details.boatyard_name AS "Site"
+SELECT 
+  COUNT(staff_roles.staff_id) AS "Number of Boat Mechanics", 
+  boatyard_details.boatyard_name AS "Site"
 FROM staff_roles
-JOIN roles ON roles.role_id = staff_roles.role_id
-JOIN staff_details ON staff_roles.staff_id = staff_details.staff_id
-JOIN boatyard_details ON boatyard_details.boatyard_id = staff_details.boatyard_id
+  JOIN roles ON roles.role_id = staff_roles.role_id
+  JOIN staff_details ON staff_roles.staff_id = staff_details.staff_id
+  JOIN boatyard_details ON boatyard_details.boatyard_id = staff_details.boatyard_id
 WHERE roles.role_name IN (SELECT role_name FROM roles WHERE role_name = ('Boat Mechanic'))
 GROUP BY boatyard_details.boatyard_id;
 
 --Query 4
 
 -- For when you need to look up the capacity of the docks in a dockyard in a specific country. (This scenario is Poland)
-SELECT boatyard_details.boatyard_name AS "Boatyard Name", dock_details.dock_id AS "Dock ID", dock_details.wet_slips_max_capcity AS "Wet Slip Capacity",dock_details.dry_slips_max_capacity AS "Dry Slip Capacity"
+SELECT 
+  boatyard_details.boatyard_name AS "Boatyard Name", 
+  dock_details.dock_id AS "Dock ID", 
+  dock_details.wet_slips_max_capcity AS "Wet Slip Capacity",
+  dock_details.dry_slips_max_capacity AS "Dry Slip Capacity"
 FROM boatyard_details
-JOIN dock_details
-ON boatyard_details.boatyard_id = dock_details.boatyard_id
+  JOIN dock_details ON boatyard_details.boatyard_id = dock_details.boatyard_id
 WHERE boatyard_details.country IN (SELECT country FROM boatyard_details WHERE country = ('Poland'))
 ORDER BY dock_details.dock_id;
 
@@ -604,21 +616,82 @@ ORDER BY dock_details.dock_id;
 --Query 5
 
 -- For when you need to see all of the boats that are owned by businesses rather than individuals not affiliated with a business
-SELECT customer_details.customer_id AS "Customer ID", customer_details.business_name AS "Business Name", boats.boat_id AS "Boat ID", boats.boat_name AS "Boat Name"
+SELECT 
+  customer_details.customer_id AS "Customer ID", 
+  customer_details.business_name AS "Business Name", 
+  boats.boat_id AS "Boat ID", 
+  boats.boat_name AS "Boat Name"
 FROM customer_details
-JOIN boats
-ON customer_details.customer_id = boats.customer_id
+  JOIN boats ON customer_details.customer_id = boats.customer_id
 WHERE customer_details.customer_type IN (SELECT customer_type FROM customer_details WHERE customer_type =  ('Business'))
 ORDER BY customer_details.customer_id;
 
 --Query 6 
 
 -- This query allows you to search up a customer by their ID and then find the boats under their name/assosiated with them as well as it's booking status.
-SELECT customer_details.customer_id AS "Customer ID", boats.boat_id AS "Boat ID", boats.boat_name AS "Boat Name", boats.boat_size_class AS "Boat Class", boats.model AS "Boat Model", bookings.booking_status AS "Booking Status"
+SELECT 
+  customer_details.customer_id AS "Customer ID", 
+  boats.boat_id AS "Boat ID", 
+  boats.boat_name AS "Boat Name", 
+  boats.boat_size_class AS "Boat Class", 
+  boats.model AS "Boat Model", 
+  bookings.booking_status AS "Booking Status"
 FROM customer_details
-JOIN boats
-ON customer_details.customer_id = boats.customer_id
-JOIN bookings
-ON customer_details.customer_id = bookings.customer_id
+  JOIN boats ON customer_details.customer_id = boats.customer_id
+  JOIN bookings ON customer_details.customer_id = bookings.customer_id
 WHERE customer_details.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
 ORDER BY boats.boat_id;
+
+
+-------------
+-- Security 
+-------------
+------------------------------
+-- Database administrator role
+------------------------------
+CREATE ROLE database_administrator WITH PASSWORD 'dbadministrator';
+ALTER USER database_administrator WITH SUPERUSER;
+
+
+-----------------
+-- Manager role 
+-----------------
+CREATE ROLE manager WITH LOGIN PASSWORD 'dbmanager1';
+
+---------------------
+-- Manager Permission
+---------------------
+GRANT SELECT ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
+GRANT INSERT ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
+GRANT UPDATE ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
+GRANT DELETE ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
+
+-------------------------------
+-- Group role - maintaince crew
+-------------------------------
+CREATE ROLE maintaince_crew; 
+    GRANT maintaince_crew TO boat_mechanics;
+    GRANT maintaince_crew TO boat_technician; 
+    GRANT maintaince_crew TO boat_electrician;
+    GRANT maintaince_crew TO boat_painter; 
+    GRANT maintaince_crew TO boat_detailer;
+
+-------------------------------
+-- Maintaince crew permission 
+--------------------------------
+GRANT SELECT ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines, engines, fuel_type, classes, hull_materials TO maintaince_crew;
+GRANT INSERT ON TABLE bookings, bookings_service TO maintaince_crew;
+GRANT UPDATE ON TABLE bookings_service, bookings, boat_hullmaterials, boat_engines, TO maintaince_crew;
+
+---------------------------
+-- customer assistant role
+---------------------------
+CREATE ROLE customer_assistant WITH LOGIN PASSWORD 'dbcustomerassistant1';
+
+-------------------------------
+-- customer assistant permission 
+--------------------------------
+
+GRANT SELECT ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines, classes, hull_materials, engines, fuel_type TO customer_assistant;
+GRANT INSERT ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines TO customer_assistant;
+GRANT UPDATE ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines TO customer_assistant;
