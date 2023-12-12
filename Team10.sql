@@ -76,14 +76,13 @@ CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
   boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
   dock_allowed_boat_size B_SIZE NOT NULL,
-  wet_slips_max_capcity SMALLINT NOT NULL,
-  dry_slips_max_capacity SMALLINT NOT NULL
+  wet_slips_current_capcity SMALLINT NOT NULL,
+  dry_slips_current_capacity SMALLINT NOT NULL
 );
 
-CREATE TABLE 
-  staff_details(
+CREATE TABLE staff_details(
     staff_id SERIAL PRIMARY KEY,
-    boatyard_id INT NOT NULL REFERENCES boatyard_details (boatyard_id),
+    boatyard_id INT NOT NULL REFERENCES boatyard_details(boatyard_id),
     staff_fname VARCHAR(40) NOT NULL,
     staff_lname  VARCHAR(40) NOT NULL,
     dob DATE NOT NULL,
@@ -95,26 +94,23 @@ CREATE TABLE
     landline_number CHAR(15),
     personal_emailaddress VARCHAR(100),
     work_emailaddress VARCHAR(100) NOT NULL
-  );
+);
 
-CREATE TABLE 
-  roles(
+CREATE TABLE roles(
     role_id SERIAL PRIMARY KEY,
     role_name VARCHAR (30) NOT NULL
-  );
+);
 
-CREATE TABLE
-  staff_roles(
-    staff_id INT REFERENCES staff_details (staff_id),
-    role_id SMALLINT REFERENCES roles (role_id)
-  );
+CREATE TABLE staff_roles(
+    staff_id INT REFERENCES staff_details(staff_id),
+    role_id SMALLINT REFERENCES roles(role_id)
+);
 
 CREATE TYPE storageType AS ENUM ('Wet Slip', 'Dry Slip', 'Indoors');
 CREATE TYPE boatSize AS ENUM ('Small', 'Medium', 'Large');
 CREATE TYPE boatType AS ENUM ('Commercial', 'Private');
 
-CREATE TABLE
-  boats(
+CREATE TABLE boats(
     boat_id SERIAL PRIMARY KEY,
     customer_id INTEGER NOT NULL REFERENCES customer_details (customer_id),
     boat_yard_id INTEGER NOT NULL REFERENCES boatyard_details ( boatyard_id),
@@ -129,19 +125,17 @@ CREATE TABLE
     beam VARCHAR (20) NOT NULL,
     draft VARCHAR (20) NOT NULL,
     cargo_tankers_capacity VARCHAR (15) NOT NULL
-    );
+);
 
-CREATE TABLE
-  classes(
+CREATE TABLE classes(
     class_id SERIAL PRIMARY KEY,
     class_name VARCHAR (40) NOT NULL
-  );
+);
 
-CREATE TABLE
-  boat_classes(
+CREATE TABLE boat_classes(
     boat_id INT NOT NULL REFERENCES boats(boat_id),
     class_id INT NOT NULL REFERENCES classes(class_id)
-  );
+);
 
 CREATE TABLE hull_materials( 
     hull_material_id SERIAL PRIMARY KEY, 
@@ -177,7 +171,7 @@ CREATE TABLE boats_engine(
 CREATE TYPE bookingType AS ENUM('Pre-booked','Emergency Service');
 CREATE TYPE bookingStatus AS ENUM('Scheduled','On-going','Completed'); 
 
-CREATE TABLE bookings(
+CREATE TABLE booking(
     booking_id SERIAL PRIMARY KEY, 
     customer_id INTEGER NOT NULL REFERENCES customer_details(customer_id),
     boat_id INTEGER NOT NULL REFERENCES boats(boat_id),
@@ -193,20 +187,14 @@ CREATE TABLE service(
     service_description VARCHAR(50) NOT NULL 
 ); 
 
-CREATE TABLE bookings_service(
+CREATE TABLE booking_service(
     booking_id INTEGER NOT NULL,
     service_id INTEGER NOT NULL,
     staff_id INTEGER REFERENCES staff_details(staff_id) NOT NULL,
-    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id),
+    FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
     FOREIGN KEY (service_id) REFERENCES service(service_id)
 );
 
-CREATE TABLE staff_task(
-    service_id INTEGER NOT NULL,
-    staff_id INTEGER NOT NULL,
-    FOREIGN KEY(service_id) REFERENCES service(service_id),
-    FOREIGN KEY(staff_id) REFERENCES staff_details(staff_id)
-);
 
 /*-------------------------------------------------------------------------------------------------
 Data inserts 
@@ -231,7 +219,7 @@ VALUES
 (4, 'Colorado', 'Sweden', '30187 Burrows Pass', '9th Floor', '542 95', 10),
 (5, 'Dawn', 'Peru', '2889 Anhalt Pass', 'Suite 90', null, 10);
 
-INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_max_capcity, dry_slips_max_capacity)
+INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_current_capcity, dry_slips_current_capacity)
 VALUES
 (1, 1, 'Small', 3, 9),
 (2, 2, 'Medium', 9, 5),
@@ -285,24 +273,6 @@ VALUES
 (13, 3, 'Loren', 'McGroarty', '4/2/1974', '563 Marquette Place', null, 'Havtsal', 'onion1', '432-657-8977', null, 'lmcgroartyc@bbc.co.uk', 'lmcgroartyc@independent.co.uk'),
 (14, 4, 'Dal', 'Huegett', '1/1/1979', '85113 Swallow Avenue', null, 'Pimenta Bueno', '78984-000', '841-802-9469', '798-975-9567', 'dhuegettd@businessinsider.com', 'dhuegettd@feedburner.com'),
 (15, 5, 'Libbi', 'Linley', '10/25/1978', '7 Drewry Plaza', 'Suite 54', 'Douentza', 'brixton3', '514-554-0146', '171-669-4652', null, 'llinleye@a8.net');
-
-INSERT INTO staff_task (service_id, staff_id)
-VALUES
-(1, 5),
-(2, 5),
-(3, 1),
-(4, 9),
-(5, 3),
-(6, 4),
-(7, 13),
-(8, 4),
-(9, 11),
-(10, 10),
-(11, 14),
-(12, 12),
-(13, 15),
-(14, 3),
-(15, 13);
 
 INSERT INTO boatyard_facilities (boatyard_id, facility_id) VALUES
 (1, 1),
@@ -360,7 +330,7 @@ VALUES
 (15, 12, 1, 12, 'Dry Slip', 'Small', 'Commercial', 'Beverly', 311251, '12/18/1974', 126, 293, 422, 346);
 
 /*bookings*/
-INSERT INTO bookings (booking_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)
+INSERT INTO booking (booking_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)
 VALUES
 (1, 14, 9, 3, 'Pre-booked', '11/12/2023', 'The boat experiences frequent engine stalls, disrupting smooth navigation and necessitating a thorough inspection of the engine components.', 'Completed'),
 (2, 15, 3, 2, 'Pre-booked', '3/20/2023', 'The propeller shows signs of wear and tear, affecting the boats performance and requiring replacement or repair to ensure optimal propulsion.', 'Scheduled'),
@@ -379,7 +349,7 @@ VALUES
 (15, 5, 8, 1, 'Pre-booked', '9/27/2023', 'The boats upholstery shows signs of water damage, affecting the aesthetic appeal and comfort. Drying, cleaning, and potential upholstery replacement are necessary.', 'On-going');
 
 
-INSERT INTO bookings_service (booking_id, service_id, staff_id) VALUES
+INSERT INTO booking_service (booking_id, service_id, staff_id) VALUES
 (1, 6, 9),
 (2, 2, 6),
 (3, 3, 12),
@@ -454,10 +424,12 @@ INSERT INTO boat_hullmaterials (boat_id, hull_material_id) VALUES
 INSERT INTO roles(role_id, role_name)
 VALUES
 (1, 'Boat Mechanic'),
-(2, 'Boat Technician'),
-(3, 'Boat Electrician'),
-(4, 'Boat Painter'),
-(5, 'Boat Detailer');
+(2, 'Manager'),
+(3, 'Assistant'),
+(4, 'Boat Technician'),
+(5, 'Boat Electrician'),
+(6, 'Boat Painter'),
+(7, 'Boat Detailer');
 
 /*emergency contact*/
 INSERT INTO emergency_contact (emergency_contact_id, customer_id, contact_fname, contact_lname, contact_mobile, contact_landline, contact_emailaddress)
@@ -479,23 +451,23 @@ VALUES
 (15, 1, 'Andrée', 'Belch', '307-450-9977', null, null);
 
 /*fuel types*/
-INSERT INTO fuel_types (fuel_id, fuel_type1, fuel_type2)
+INSERT INTO fuel_types (fuel_id, fuel_type1)
 VALUES
-(1, 'Hydrogen', 'Biofuel'),
-(2, 'Gasoline', 'Diesel'),
-(3, 'Biofuel', null),
-(4, 'Hydrogen', null),
-(5, 'Gasoline', null),
-(6, 'Biofuel', null),
-(7, 'Diesel', 'Hydrogen'),
-(8, 'Electric', null),
-(9, 'Gasoline', null),
-(10, 'Diesel', 'Biofuel'),
-(11, 'Biofuel', null),
-(12, 'Diesel', 'Electric'),
-(13, 'Diesel', 'Electric'),
-(14, 'Hydrogen', 'Diesel'),
-(15, 'Hydrogen', null);
+(1, 'Hydrogen'),
+(2, 'Gasoline'),
+(3, 'Biofuel'),
+(4, 'Hydrogen'),
+(5, 'Gasoline'),
+(6, 'Biofuel'),
+(7, 'Diesel'),
+(8, 'Electric'),
+(9, 'Gasoline'),
+(10, 'Diesel'),
+(11, 'Biofuel'),
+(12, 'Diesel'),
+(13, 'Diesel'),
+(14, 'Hydrogen'),
+(15, 'Hydrogen');
 
 INSERT INTO engines (engine_id, fuel_id, engine_type, engine_make, engine_model) VALUES
 (1, 1, 'magna', 'consequat', 'venenatis'),
@@ -579,8 +551,8 @@ SELECT
   booking_date AS "Booking Date", 
   issue_description AS "Issue Description"
 FROM bookings
-  JOIN boats ON boats.boat_id = bookings.boat_id
-  JOIN boatyard_details ON boatyard_details.boatyard_id = bookings.boatyard_id
+  JOIN boats ON boats.boat_id = booking.boat_id
+  JOIN boatyard_details ON boatyard_details.boatyard_id = booking.boatyard_id
 WHERE booking_type = 'Pre-booked' AND booking_status = 'Scheduled';
 
 /* Query 3 */
@@ -605,8 +577,8 @@ GROUP BY boatyard_details.boatyard_id;
 SELECT 
   boatyard_details.boatyard_name AS "Boatyard Name", 
   dock_details.dock_id AS "Dock ID", 
-  dock_details.wet_slips_max_capcity AS "Wet Slip Capacity",
-  dock_details.dry_slips_max_capacity AS "Dry Slip Capacity"
+  dock_details.wet_slips_current_capcity AS "Wet Slip Capacity",
+  dock_details.dry_slips_current_capacity AS "Dry Slip Capacity"
 FROM boatyard_details
   JOIN dock_details ON boatyard_details.boatyard_id = dock_details.boatyard_id
 WHERE boatyard_details.country IN (SELECT country FROM boatyard_details WHERE country = ('Poland'))
@@ -635,17 +607,17 @@ SELECT
   boats.boat_name AS "Boat Name", 
   boats.boat_size_class AS "Boat Class", 
   boats.model AS "Boat Model", 
-  bookings.booking_status AS "Booking Status"
+  booking.booking_status AS "Booking Status"
 FROM customer_details
   JOIN boats ON customer_details.customer_id = boats.customer_id
-  JOIN bookings ON customer_details.customer_id = bookings.customer_id
+  JOIN booking ON customer_details.customer_id = booking.customer_id
 WHERE customer_details.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
 ORDER BY boats.boat_id;
 
 
--------------
--- Security 
--------------
+------------------------
+-- Roles and Permissions
+------------------------
 ------------------------------
 -- Database administrator role
 ------------------------------
