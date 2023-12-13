@@ -141,9 +141,9 @@ CREATE TABLE boat_details(
     boat_name VARCHAR (80) NOT NULL,
     model VARCHAR (40) NOT NULL,
     build_date DATE,
-    length_overall VARCHAR (20) NOT NULL,
-    beam VARCHAR (20) NOT NULL,
-    draft VARCHAR (20) NOT NULL,
+    length_overall INTEGER NOT NULL,
+    beam INTEGER NOT NULL,
+    draft INTEGER NOT NULL,
     cargo_tankers_capacity VARCHAR (15),
     CONSTRAINT boat_type_check CHECK(
       (boat_type = 'commercial' AND cargo_tankers_capacity IS NOT NULL)
@@ -277,13 +277,13 @@ $update_indoor_storage_capacity$ LANGUAGE plpgsql;
 CREATE TRIGGER trigger_update_wet_slip
 AFTER INSERT OR DELETE on boat_details
 FOR EACH ROW
-EXECUTE FUNCTION fn_update_wet_slip_view();
+EXECUTE FUNCTION fn_update_wet_slip_capacity();
 
 -- Dry slip update trigger
 CREATE TRIGGER trigger_update_dry_slip
 AFTER INSERT OR DELETE on boat_details
 FOR EACH ROW
-EXECUTE FUNCTION fn_update_dry_slip_view();
+EXECUTE FUNCTION fn_update_dry_slip_capacity();
 
 -- Indoor storage update trigger
 CREATE TRIGGER trigger_update_indoor_storage
@@ -373,7 +373,13 @@ VALUES
 (12, 2, 'Clint', 'Maker', '12/19/1991', '11 Thackeray Street', 'PO Box 84647', 'Bangluo', 'cheese1', '275-827-9400', '576-255-8002', 'pwhybray0@businesswire.com', 'cmakerb@hibu.com'),
 (13, 3, 'Loren', 'McGroarty', '4/2/1974', '563 Marquette Place', null, 'Havtsal', 'onion1', '432-657-8977', null, 'lmcgroartyc@bbc.co.uk', 'lmcgroartyc@independent.co.uk'),
 (14, 4, 'Dal', 'Huegett', '1/1/1979', '85113 Swallow Avenue', null, 'Pimenta Bueno', '78984-000', '841-802-9469', '798-975-9567', 'dhuegettd@businessinsider.com', 'dhuegettd@feedburner.com'),
-(15, 5, 'Libbi', 'Linley', '10/25/1978', '7 Drewry Plaza', 'Suite 54', 'Douentza', 'brixton3', '514-554-0146', '171-669-4652', 'jdownie1@princeton.edu', 'llinleye@a8.net');
+(15, 5, 'Libbi', 'Linley', '10/25/1978', '7 Drewry Plaza', 'Suite 54', 'Douentza', 'brixton3', '514-554-0146', '171-669-4652', 'jdownie1@princeton.edu', 'llinleye@a8.net'),
+(16, 4, 'Fidela', 'Alwen', '4/26/1971', '9 Nobel Avenue', 'Room 674', 'Amboasary', 'po212gd', '260-484-6713', '465-283-1359', 'falwen0@goo.ne.jp', 'falwen0@sogou.com'),
+(17, 1, 'Kathi', 'Veschambes', '12/26/1980', '0 Carberry Terrace', 'PO Box 41729', 'f7ehj5k', '17-123', '817-843-0517', '829-385-0118', 'kveschambes1@tumblr.com', 'kveschambes1@imageshack.us'),
+(18, 3, 'Sasha', 'Pimblett', '3/28/2001', '9967 Riverside Lane', '4th Floor', 'Baishi', "fhf74hr", '713-997-8502', '317-654-9631', 'spimblett2@tinypic.com', 'spimblett2@friendfeed.com'),
+(19, 2, 'Hank', 'Arent', '3/2/1999', '01731 8th Park', 'Room 1943', 'Al Ḩarajah', '7dfh47', '462-990-1284', '512-954-1320', 'harent3@marriott.com', 'harent3@mozilla.org'),
+(20, 4, 'Fanechka', 'Schirok', '2/19/1977', '47 Victoria Park', 'Room 19', 'Ovsyanka', '663083', '804-130-4010', '325-886-3231', 'fschirok4@hatena.ne.jp', 'fschirok4@github.io');
+
 
 -- Boatyard facilities
 INSERT INTO boatyard_facilities (boatyard_id, facility_id) VALUES
@@ -622,7 +628,12 @@ VALUES
 (12, 5),
 (13, 2),
 (14, 2),
-(15, 3);
+(15, 3),
+(16, 4),
+(17, 6),
+(18, 7),
+(19, 5),
+(20, 3);
 
 
 ----------------
@@ -656,10 +667,10 @@ CREATE VIEW boatyard_storage_availabllity_view AS
 SELECT
   dd.boatyard_id AS "boatyard ID",
   byd.boatyard_name AS "boatyard Name",
-  SUM(dd.wet_slips_current_capcity) AS "wet slips available",
+  SUM(dd.wet_slips_current_capacity) AS "wet slips available",
   SUM(dd.dry_slips_current_capacity) AS "dry slips available",
   byd.indoor_storage_capacity AS "indoor storage available",
-  (SUM(dd.wet_slips_current_capcity) + SUM(dd.dry_slips_current_capacity) + byd.indoor_storage_capacity) AS "total storage available"
+  (SUM(dd.wet_slips_current_capacity) + SUM(dd.dry_slips_current_capacity) + byd.indoor_storage_capacity) AS "total storage available"
 FROM dock_details dd
   INNER JOIN boatyard_details byd ON byd.boatyard_id = dd.boatyard_id
 GROUP BY dd.boatyard_id, byd.boatyard_name, byd.indoor_storage_capacity
@@ -892,11 +903,12 @@ CREATE ROLE manager WITH LOGIN PASSWORD 'dbmanager1';
 ---------------------
 -- Manager Permission
 ---------------------
-GRANT SELECT ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
-GRANT INSERT ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
-GRANT UPDATE ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
-GRANT DELETE ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE staff_details, staff_roles, boatyard_id, bookings_service, bookings, customer_details, emergency_contact, boats, boat_classes, classes, boat_hullmaterials, hull_materials, boat_engines, engines, fuel_type TO manager;
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON SCHEMA public TO manager WITH GRANT OPTION;
+REVOKE SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public FROM manager;
+
+GRANT SELECT ON staff_boatyard_view, boatyard_storage_availabllity_view, Business_Storing_Boats_view, indivudals_Storing_Boats_view, completed_bookings_view, ongoing_bookings_view, scheduled_bookings_view, commercial_ships_stored_view, private_ships_stored_view TO manager;
 -------------------------------
 -- Group role - maintaince crew
 -------------------------------
@@ -914,6 +926,7 @@ GRANT SELECT ON TABLE bookings, customer_details, emergency_contact, boats, boat
 GRANT INSERT ON TABLE bookings, bookings_service TO maintaince_crew;
 GRANT UPDATE ON TABLE bookings_service, bookings, boat_hullmaterials, boat_engines, TO maintaince_crew;
 
+GRANT SELECT ON boatyard_storage_availabllity_view, Business_Storing_Boats_view, indivudals_Storing_Boats_view, completed_bookings_view, ongoing_bookings_view, scheduled_bookings_view, commercial_ships_stored_view, private_ships_stored_view TO maintaince_crew;
 ---------------------------
 -- customer assistant role
 ---------------------------
@@ -924,5 +937,6 @@ CREATE ROLE customer_assistant WITH LOGIN PASSWORD 'dbcustomerassistant1';
 --------------------------------
 
 GRANT SELECT ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines, classes, hull_materials, engines, fuel_type TO customer_assistant;
-GRANT INSERT ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines TO customer_assistant;
-GRANT UPDATE ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines TO customer_assistant;
+GRANT INSERT, UPDATE ON TABLE bookings, customer_details, emergency_contact, boats, boat_classes, boat_hullmaterials, boat_engines TO customer_assistant;
+
+GRANT SELECT ON boatyard_storage_availabllity_view, Business_Storing_Boats_view, indivudals_Storing_Boats_view, completed_bookings_view, ongoing_bookings_view, scheduled_bookings_view, commercial_ships_stored_view, private_ships_stored_view TO customer_assistant;
