@@ -576,8 +576,8 @@ SELECT
   boatyard_name AS "Boatyard", 
   booking_date AS "Booking Date", 
   issue_description AS "Issue Description"
-FROM bookings
-  JOIN boats ON boats.boat_id = booking.boat_id
+FROM booking
+  JOIN boat_details ON boat_details.boat_id = booking.boat_id
   JOIN boatyard_details ON boatyard_details.boatyard_id = booking.boatyard_id
 WHERE booking_type = 'pre-booked' AND booking_status = 'scheduled';
 
@@ -617,11 +617,11 @@ ORDER BY dock_details.dock_id;
 SELECT 
   customer_details.customer_id AS "Customer ID", 
   customer_details.business_name AS "Business Name", 
-  boats.boat_id AS "Boat ID", 
-  boats.boat_name AS "Boat Name"
+  boat_details.boat_id AS "Boat ID", 
+  boat_details.boat_name AS "Boat Name"
 FROM customer_details
-  JOIN boats ON customer_details.customer_id = boats.customer_id
-WHERE customer_details.customer_type IN (SELECT customer_type FROM customer_details WHERE customer_type =  ('Business'))
+  JOIN boat_details ON customer_details.customer_id = boat_details.customer_id
+WHERE customer_details.customer_type IN (SELECT customer_type FROM customer_details WHERE customer_type =  ('business'))
 ORDER BY customer_details.customer_id;
 
 --Query 6 
@@ -629,16 +629,16 @@ ORDER BY customer_details.customer_id;
 -- This query allows you to search up a customer by their ID and then find the boats under their name/assosiated with them as well as it's booking status.
 SELECT 
   customer_details.customer_id AS "Customer ID", 
-  boats.boat_id AS "Boat ID", 
-  boats.boat_name AS "Boat Name", 
-  boats.boat_size_class AS "Boat Class", 
-  boats.model AS "Boat Model", 
+  boat_details.boat_id AS "Boat ID", 
+  boat_details.boat_name AS "Boat Name", 
+  boat_details.boat_size_class AS "Boat Class", 
+  boat_details.model AS "Boat Model", 
   booking.booking_status AS "Booking Status"
 FROM customer_details
-  JOIN boats ON customer_details.customer_id = boats.customer_id
+  JOIN boat_details ON customer_details.customer_id = boat_details.customer_id
   JOIN booking ON customer_details.customer_id = booking.customer_id
 WHERE customer_details.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
-ORDER BY boats.boat_id;
+ORDER BY boat_details.boat_id;
 
 
 ------------------------
