@@ -27,7 +27,6 @@ CREATE DATABASE team10;
 Enum type creations 
 */------------------------------------------------------------------------------------------------
 CREATE TYPE CUST_TYPE AS ENUM('business', 'individual');
-CREATE TYPE BOAT_SIZE_CLASS AS ENUM('small', 'medium', 'large');
 CREATE TYPE STORAGETYPE AS ENUM ('wet slip', 'dry slip', 'indoors');
 CREATE TYPE BOATTYPE AS ENUM ('commercial', 'private');
 CREATE TYPE BOOKINGTYPE AS ENUM('pre-booked','emergency service');
@@ -96,7 +95,6 @@ CREATE TABLE boatyard_facilities(
 CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
   boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
-  dock_allowed_boat_size BOAT_SIZE_CLASS NOT NULL,
   wet_slips_current_capacity SMALLINT NOT NULL,
   dry_slips_current_capacity SMALLINT NOT NULL
 );
@@ -136,7 +134,6 @@ CREATE TABLE boat_details(
     boatyard_id INTEGER NOT NULL REFERENCES boatyard_details ( boatyard_id),
     dock_id INTEGER NOT NULL REFERENCES dock_details (dock_id),
     boat_storage_type STORAGETYPE NOT NULL,
-    boat_size_class BOAT_SIZE_CLASS NOT NULL,
     boat_type BOATTYPE NOT NULL,
     boat_name VARCHAR (80) NOT NULL,
     model VARCHAR (40) NOT NULL,
@@ -319,23 +316,23 @@ VALUES
 (5, 'Dawn', 'Peru', '2889 Anhalt Pass', 'Suite 90', null, 10);
 
 -- Dock details
-INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_current_capacity, dry_slips_current_capacity)
+INSERT INTO dock_details(dock_id, boatyard_id, wet_slips_current_capacity, dry_slips_current_capacity)
 VALUES
-(1, 1, 'small', 3, 9),
-(2, 2, 'medium', 9, 5),
-(3, 3, 'small', 5, 3),
-(4, 4, 'large', 4, 4),
-(5, 5, 'large', 10, 5),
-(6, 1, 'medium', 6, 5),
-(7, 2, 'small', 9, 6),
-(8, 3, 'large', 4, 8),
-(9, 4, 'small', 9,9),
-(10, 5, 'medium', 5, 3),
-(11, 1, 'large', 6, 6),
-(12, 2, 'large', 5, 4),
-(13, 3, 'medium', 6, 5),
-(14, 4, 'medium', 6, 5),
-(15, 5, 'small', 10, 3);
+(1, 1, 3, 9),
+(2, 2, 9, 5),
+(3, 3, 5, 3),
+(4, 4, 4, 4),
+(5, 5, 10, 5),
+(6, 1, 6, 5),
+(7, 2, 9, 6),
+(8, 3, 4, 8),
+(9, 4, 9, 9),
+(10, 5, 5, 3),
+(11, 1, 6, 6),
+(12, 2, 5, 4),
+(13, 3, 6, 5),
+(14, 4, 6, 5),
+(15, 5, 10, 3);
 
 -- Services
 INSERT INTO service (service_id, service_description)
@@ -376,7 +373,7 @@ VALUES
 (15, 5, 'Libbi', 'Linley', '10/25/1978', '7 Drewry Plaza', 'Suite 54', 'Douentza', 'brixton3', '514-554-0146', '171-669-4652', 'jdownie1@princeton.edu', 'llinleye@a8.net'),
 (16, 4, 'Fidela', 'Alwen', '4/26/1971', '9 Nobel Avenue', 'Room 674', 'Amboasary', 'po212gd', '260-484-6713', '465-283-1359', 'falwen0@goo.ne.jp', 'falwen0@sogou.com'),
 (17, 1, 'Kathi', 'Veschambes', '12/26/1980', '0 Carberry Terrace', 'PO Box 41729', 'f7ehj5k', '17-123', '817-843-0517', '829-385-0118', 'kveschambes1@tumblr.com', 'kveschambes1@imageshack.us'),
-(18, 3, 'Sasha', 'Pimblett', '3/28/2001', '9967 Riverside Lane', '4th Floor', 'Baishi', "fhf74hr", '713-997-8502', '317-654-9631', 'spimblett2@tinypic.com', 'spimblett2@friendfeed.com'),
+(18, 3, 'Sasha', 'Pimblett', '3/28/2001', '9967 Riverside Lane', '4th Floor', 'Baishi', 'fhf74hr', '713-997-8502', '317-654-9631', 'spimblett2@tinypic.com', 'spimblett2@friendfeed.com'),
 (19, 2, 'Hank', 'Arent', '3/2/1999', '01731 8th Park', 'Room 1943', 'Al Ḩarajah', '7dfh47', '462-990-1284', '512-954-1320', 'harent3@marriott.com', 'harent3@mozilla.org'),
 (20, 4, 'Fanechka', 'Schirok', '2/19/1977', '47 Victoria Park', 'Room 19', 'Ovsyanka', '663083', '804-130-4010', '325-886-3231', 'fschirok4@hatena.ne.jp', 'fschirok4@github.io');
 
@@ -419,23 +416,23 @@ VALUES
 (15, 'individual',null , 'Hayes', 'Vamplus', '6/21/1979', 'Serbia', '0639 Evergreen Terrace', null, 'Rača', 'cheese4', 'gbedo1@craigslist.org', '416-570-0419', '118-400-3803');
 
 -- boats 
-INSERT INTO boat_details (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length_overall, beam, draft, cargo_tankers_capacity)
+INSERT INTO boat_details (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_type, boat_name, model, build_date, length_overall, beam, draft, cargo_tankers_capacity)
 VALUES
-(1, 13, 4, 6, 'dry slip', 'medium', 'commercial', 'Saudra', 417699, '5/4/1993', 184, 85, 175, 397),
-(2, 11, 1, 9, 'indoors', 'medium', 'commercial', 'Timothea', 951237, '8/20/1982', 292, 137, 479, 432),
-(3, 15, 4, 8, 'indoors', 'large', 'private', 'Connie', 336967, '9/26/1978', 377, 469, 461, null),
-(4, 9, 4, 4, 'dry slip', 'large', 'commercial', 'Kendra', 304266, '5/30/1945', 435, 261, 276, 496),
-(5, 8, 1, 3, 'wet slip', 'large', 'private', 'Danika', 949416, '8/7/1952', 69, 74, 468, null),
-(6, 13, 2, 4, 'indoors', 'medium', 'commercial', 'Chelsea', 848229, '7/31/1949', 496, 98, 384, 460),
-(7, 12, 5, 8, 'wet slip', 'medium', 'private', 'Keriann', 172324, '10/23/1907', 488, 11, 334, null),
-(8, 7, 2, 4, 'wet slip', 'medium', 'commercial', 'Kattie', 959562, '7/9/1909', 400, 499, 192, 348),
-(9, 11, 3, 11, 'dry slip', 'medium', 'commercial', 'Olwen', 258571, '12/7/1916', 300, 102, 371, 25),
-(10, 14, 5, 14, 'indoors', 'large', 'commercial', 'Sally', 982831, '11/14/1930', 399, 176, 372, 29),
-(11, 7, 2, 12, 'indoors', 'medium', 'commercial', 'Barbara', 248747, '10/7/1999', 135, 339, 274, 154),
-(12, 14, 5, 7, 'wet slip', 'small', 'private', 'Sissie', 464049, '1/5/1978', 466, 323, 177, null),
-(13, 11, 2, 8, 'indoors', 'small', 'private', 'Mara', 249078, '7/13/1948', 172, 121, 68, null),
-(14, 2, 4, 8, 'wet slip', 'medium', 'commercial', 'Aindrea', 976396, '7/2/1940', 322, 356, 178, 294),
-(15, 12, 1, 12, 'dry slip', 'small', 'commercial', 'Beverly', 311251, '12/18/1974', 126, 293, 422, 346);
+(1, 13, 4, 6, 'dry slip','commercial', 'Saudra', 417699, '5/4/1993', 184, 85, 175, 397),
+(2, 11, 1, 9, 'indoors','commercial', 'Timothea', 951237, '8/20/1982', 292, 137, 479, 432),
+(3, 15, 4, 8, 'indoors', 'private', 'Connie', 336967, '9/26/1978', 377, 469, 461, null),
+(4, 9, 4, 4, 'dry slip','commercial', 'Kendra', 304266, '5/30/1945', 435, 261, 276, 496),
+(5, 8, 1, 3, 'wet slip', 'private', 'Danika', 949416, '8/7/1952', 69, 74, 468, null),
+(6, 13, 2, 4, 'indoors', 'commercial', 'Chelsea', 848229, '7/31/1949', 496, 98, 384, 460),
+(7, 12, 5, 8, 'wet slip', 'private', 'Keriann', 172324, '10/23/1907', 488, 11, 334, null),
+(8, 7, 2, 4, 'wet slip', 'commercial', 'Kattie', 959562, '7/9/1909', 400, 499, 192, 348),
+(9, 11, 3, 11, 'dry slip','commercial', 'Olwen', 258571, '12/7/1916', 300, 102, 371, 25),
+(10, 14, 5, 14, 'indoors','commercial', 'Sally', 982831, '11/14/1930', 399, 176, 372, 29),
+(11, 7, 2, 12, 'indoors','commercial', 'Barbara', 248747, '10/7/1999', 135, 339, 274, 154),
+(12, 14, 5, 7, 'wet slip','private', 'Sissie', 464049, '1/5/1978', 466, 323, 177, null),
+(13, 11, 2, 8, 'indoors', 'private', 'Mara', 249078, '7/13/1948', 172, 121, 68, null),
+(14, 2, 4, 8, 'wet slip', 'commercial', 'Aindrea', 976396, '7/2/1940', 322, 356, 178, 294),
+(15, 12, 1, 12, 'dry slip', 'commercial', 'Beverly', 311251, '12/18/1974', 126, 293, 422, 346);
 
 -- Bookings
 INSERT INTO booking (booking_id, customer_id, boat_id, boatyard_id, booking_type, booking_date, issue_description, booking_status)
@@ -765,7 +762,6 @@ SELECT
   byd.boatyard_name AS "Boatyard_name", 
   bd.dock_id AS "Dock ID",
   bd.boat_storage_type AS "Method of storage",
-  bd.boat_size_class AS "Boat size class",
   bd.boat_name AS "Boat name",
   bd.build_date AS "Boat built date",
   bd.length_overall AS "Length overall",
@@ -786,7 +782,6 @@ SELECT
   byd.boatyard_name AS "Boatyard_name", 
   bd.dock_id AS "Dock ID",
   bd.boat_storage_type AS "Method of storage",
-  bd.boat_size_class AS "Boat size class",
   bd.boat_name AS "Boat name",
   bd.build_date AS "Boat built date",
   bd.length_overall AS "Length overall",
@@ -805,14 +800,10 @@ Queries
 
 -- Query 1
 
--- Query 1 is useful for the company as it allows them to see identify which roles need filling within each boatyard.
--- This then allows the manager to identify which roles they need to create job applications for.
-
-
-/* Query 2 */
-
-/* Query 2 is designed so that managers can list all scheduled tasks in the future,
-this can help with scheduling and procurement */
+/*
+Query 1 is designed so that managers can list all scheduled tasks in the future,
+this can help with scheduling and procurement 
+*/
 
 SELECT 
   booking_id AS "Booking ID", 
@@ -825,11 +816,13 @@ FROM booking
   JOIN boatyard_details ON boatyard_details.boatyard_id = booking.boatyard_id
 WHERE booking_type = 'pre-booked' AND booking_status = 'scheduled';
 
-/* Query 3 */
+-- Query 2 
 
-/* Query 3 is designed to help HR procurement by telling you how many members of a selected staff type,
+/* 
+Query 2 is designed to help HR procurement by telling you how many members of a selected staff type,
 in this case, boat mechanics, are available. This has then been split into how many are on each site,
-as this can then be used to help decide which place is best for certain jobs for ships */
+as this can then be used to help decide which place is best for certain jobs for ships 
+*/
 
 SELECT 
   COUNT(staff_roles.staff_id) AS "Number of Boat Mechanics", 
@@ -841,13 +834,15 @@ FROM staff_roles
 WHERE roles.role_name IN (SELECT role_name FROM roles WHERE role_name = ('Boat Mechanic'))
 GROUP BY boatyard_details.boatyard_id;
 
---Query 4
+--Query 3
+/*
+For when you need to look up the capacity of the docks in a dockyard in a specific country. (This scenario is Poland)
+*/
 
--- For when you need to look up the capacity of the docks in a dockyard in a specific country. (This scenario is Poland)
 SELECT 
   boatyard_details.boatyard_name AS "Boatyard Name", 
   dock_details.dock_id AS "Dock ID", 
-  dock_details.wet_slips_current_capcity AS "Wet Slip Capacity",
+  dock_details.wet_slips_current_capacity AS "Wet Slip Capacity",
   dock_details.dry_slips_current_capacity AS "Dry Slip Capacity"
 FROM boatyard_details
   JOIN dock_details ON boatyard_details.boatyard_id = dock_details.boatyard_id
@@ -855,9 +850,10 @@ WHERE boatyard_details.country IN (SELECT country FROM boatyard_details WHERE co
 ORDER BY dock_details.dock_id;
 
 
---Query 5
-
--- For when you need to see all of the boats that are owned by businesses rather than individuals not affiliated with a business
+--Query 4
+/*
+For when you need to see all of the boats that are owned by businesses rather than individuals not affiliated with a business
+*/
 SELECT 
   customer_details.customer_id AS "Customer ID", 
   customer_details.business_name AS "Business Name", 
@@ -868,14 +864,15 @@ FROM customer_details
 WHERE customer_details.customer_type IN (SELECT customer_type FROM customer_details WHERE customer_type =  ('business'))
 ORDER BY customer_details.customer_id;
 
---Query 6 
+--Query 5
+/*
+This query allows you to search up a customer by their ID and then find the boats under their name/assosiated with them as well as it's booking status.
+*/
 
--- This query allows you to search up a customer by their ID and then find the boats under their name/assosiated with them as well as it's booking status.
 SELECT 
   customer_details.customer_id AS "Customer ID", 
   boat_details.boat_id AS "Boat ID", 
   boat_details.boat_name AS "Boat Name", 
-  boat_details.boat_size_class AS "Boat Class", 
   boat_details.model AS "Boat Model", 
   booking.booking_status AS "Booking Status"
 FROM customer_details
