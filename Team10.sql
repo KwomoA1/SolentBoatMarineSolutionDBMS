@@ -455,7 +455,7 @@ INSERT INTO roles(role_id, role_name)
 VALUES
 (1, 'Boat Mechanic'),
 (2, 'Manager'),
-(3, 'Assistant'),
+(3, 'Assistant manager'),
 (4, 'Boat Technician'),
 (5, 'Boat Electrician'),
 (6, 'Boat Painter'),
@@ -533,37 +533,57 @@ VALUES
 INSERT INTO staff_roles (staff_id, role_id)
 VALUES
 (1, 3),
-(2, 4),
-(3, 5),
+(2, 3),
+(3, 3),
 (4, 4),
 (5, 2),
 (6, 1),
 (7, 2),
 (8, 5),
-(9, 1),
+(9, 3),
 (10, 5),
 (11, 2),
 (12, 5),
-(13, 5),
+(13, 2),
 (14, 2),
-(15, 5);
+(15, 3);
+
+----------------------------------
+-- Views 
+----------------------------------
+
+-- Staff working on boatyard 
+CREATE VIEW staff_boatyard_view AS
+SELECT
+  byd.boatyard_id AS "Boatyard ID",
+  byd.boatyard_name AS "Boatyard Name",
+  sd.staff_id AS "Staff ID",
+  CONCAT(sd.staff_fname,' ',sd.staff_lname) AS "staff name",
+  r.role_name AS "Staff role",
+  sd.work_emailaddress AS "Work Email address"
+FROM boatyard_details byd
+  INNER JOIN staff_details sd ON sd.boatyard_id = byd.boatyard_id
+  INNER JOIN staff_roles stf ON sd.staff_id = stf.staff_id
+  INNER JOIN roles r ON stf.role_id = r.role_id
+ORDER BY 
+byd.boatyard_id,
+CASE r.role_name
+  WHEN 'Manager' THEN 1
+  WHEN 'Assistant manager' THEN 2
+  ELSE 3
+end,
+sd.staff_id;
+
 
 /*-------------------------------------------------------------------------------------------------
 Queries 
 */-------------------------------------------------------------------------------------------------
 
-/* Query 1 */
+-- Query 1
 
-/* Query is designed so that the manager or HR can retrieve the names 
-and IDs of all staff on their site, this could be useful for human 
-resource management tasks */
+-- Query 1 is useful for the company as it allows them to see identify which roles need filling within each boatyard.
+-- This then allows the manager to identify which roles they need to create job applications for.
 
-SELECT 
-  staff_id AS "ID", 
-  CONCAT(staff_fname, ' ', staff_lname) AS "Staff Members" 
-FROM staff_details
-  JOIN boatyard_details ON staff_details.boatyard_id = boatyard_details.boatyard_id
-WHERE boatyard_details.boatyard_name IN (SELECT boatyard_name FROM boatyard_details WHERE boatyard_name = ('Blue Bill Park'));
 
 /* Query 2 */
 
