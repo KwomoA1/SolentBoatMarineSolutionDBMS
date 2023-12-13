@@ -10,6 +10,11 @@ Zac: up2114856
 Triggers/Functions 
 */-------------------------------------------------------------------------------------------------
 
+-- Update storage capacity
+
+-- View triggers/functions
+
+-- Boat size update trigger/function
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -548,7 +553,8 @@ VALUES
 (14, 2),
 (15, 3);
 
-----------------------------------
+------------------
+----------------
 -- Views 
 ----------------------------------
 
@@ -573,6 +579,14 @@ CASE r.role_name
   ELSE 3
 end,
 sd.staff_id;
+
+-- Boatyard storage availability
+
+-- Bookings in next available days 
+
+-- Business storing boats with company
+
+-- Tasks working on a service currently (on-going) 
 
 
 /*-------------------------------------------------------------------------------------------------
