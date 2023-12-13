@@ -97,7 +97,7 @@ CREATE TABLE dock_details(
   dock_id SERIAL PRIMARY KEY,
   boatyard_id INT REFERENCES boatyard_details(boatyard_id) NOT NULL,
   dock_allowed_boat_size BOAT_SIZE_CLASS NOT NULL,
-  wet_slips_current_capcity SMALLINT NOT NULL,
+  wet_slips_current_capacity SMALLINT NOT NULL,
   dry_slips_current_capacity SMALLINT NOT NULL
 );
 
@@ -220,6 +220,77 @@ CREATE TABLE booking_service(
     FOREIGN KEY (service_id) REFERENCES service(service_id)
 );
 
+-------------------------
+-- Function
+-------------------------
+
+-- update wet slip capacity
+CREATE FUNCTION fn_update_wet_slip_capacity() RETURNS trigger AS $update_wet_slip_capacity$
+  BEGIN 
+    IF (TG_OP = 'INSERT' AND NEW.boat_storage_type = 'wet slip') THEN
+    UPDATE dock_details SET wet_slips_current_capacity = wet_slips_current_capacity - 1
+    WHERE dock_id = new.dock_id;
+
+    ELSEIF (TG_OP = 'DELETE' AND NEW.boat_storage_type = 'wet slip') THEN
+    UPDATE dock_details SET wet_slips_current_capacity = wet_slips_current_capacity + 1
+    WHERE dock_id = new.dock_id; 
+    END IF;
+    RETURN NULL;
+  END;
+$update_wet_slip_capacity$ LANGUAGE plpgsql;
+
+-- update dry slip capacity 
+CREATE FUNCTION fn_update_dry_slip_capacity() RETURNS trigger AS $update_dry_slip_capacity$
+  BEGIN 
+    IF (TG_OP = 'INSERT' AND NEW.boat_storage_type = 'dry slip') THEN
+    UPDATE dock_details SET dry_slips_current_capacity = dry_slips_current_capacity - 1
+    WHERE dock_id = new.dock_id;
+
+    ELSEIF (TG_OP = 'DELETE' AND NEW.boat_storage_type = 'dry slip') THEN
+    UPDATE dock_details SET dry_slips_current_capacity = dry_slips_current_capacity + 1
+    WHERE dock_id = new.dock_id; 
+    END IF;
+    RETURN NULL;
+  END;
+$update_dry_slip_capacity$ LANGUAGE plpgsql;
+
+-- update indoor storage capacity 
+CREATE FUNCTION fn_update_indoor_storage_capacity() RETURNS trigger AS $update_indoor_storage_capacity$
+  BEGIN 
+    IF (TG_OP = 'INSERT' AND NEW.boat_storage_type = 'indoors') THEN
+    UPDATE boatyard_details SET indoor_storage_capacity = indoor_storage_capacity - 1
+    WHERE boatyard_id = new.boatyard_id;
+
+    ELSEIF (TG_OP = 'DELETE' AND NEW.boat_storage_type = 'indoors') THEN
+    UPDATE boatyard_details SET indoor_storage_capacity = indoor_storage_capacity + 1
+    WHERE boatyard_id = new.boatyard_id; 
+    END IF;
+    RETURN NULL;
+  END;
+$update_indoor_storage_capacity$ LANGUAGE plpgsql;
+
+----------------------
+-- Triggers 
+----------------------
+
+-- Wet Slip update trigger 
+CREATE TRIGGER trigger_update_wet_slip
+AFTER INSERT OR DELETE on boat_details
+FOR EACH ROW
+EXECUTE FUNCTION fn_update_wet_slip_view();
+
+-- Dry slip update trigger
+CREATE TRIGGER trigger_update_dry_slip
+AFTER INSERT OR DELETE on boat_details
+FOR EACH ROW
+EXECUTE FUNCTION fn_update_dry_slip_view();
+
+-- Indoor storage update trigger
+CREATE TRIGGER trigger_update_indoor_storage
+AFTER INSERT OR DELETE on boat_details
+FOR EACH ROW
+EXECUTE FUNCTION fn_update_indoor_storage_capacity();
+
 
 /*-------------------------------------------------------------------------------------------------
 Data inserts 
@@ -248,7 +319,7 @@ VALUES
 (5, 'Dawn', 'Peru', '2889 Anhalt Pass', 'Suite 90', null, 10);
 
 -- Dock details
-INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_current_capcity, dry_slips_current_capacity)
+INSERT INTO dock_details(dock_id, boatyard_id, dock_allowed_boat_size, wet_slips_current_capacity, dry_slips_current_capacity)
 VALUES
 (1, 1, 'small', 3, 9),
 (2, 2, 'medium', 9, 5),
@@ -594,8 +665,6 @@ FROM dock_details dd
 GROUP BY dd.boatyard_id, byd.boatyard_name, byd.indoor_storage_capacity
 ORDER BY dd.boatyard_id;
 
--- Bookings in next available days 
-
 
 -- Business storing boats with company
 CREATE VIEW Business_Storing_Boats_view AS 
@@ -717,6 +786,7 @@ SELECT
     INNER JOIN boatyard_details byd ON bd.boatyard_id = byd.boatyard_id 
   WHERE boat_type = 'private'
   ORDER BY bd.boatyard_id;
+
 
 /*-------------------------------------------------------------------------------------------------
 Queries 
