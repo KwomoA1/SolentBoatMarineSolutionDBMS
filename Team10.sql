@@ -133,7 +133,7 @@ CREATE TABLE staff_roles(
 CREATE TABLE boat_details(
     boat_id SERIAL PRIMARY KEY,
     customer_id INTEGER NOT NULL REFERENCES customer_details (customer_id),
-    boat_yard_id INTEGER NOT NULL REFERENCES boatyard_details ( boatyard_id),
+    boatyard_id INTEGER NOT NULL REFERENCES boatyard_details ( boatyard_id),
     dock_id INTEGER NOT NULL REFERENCES dock_details (dock_id),
     boat_storage_type STORAGETYPE NOT NULL,
     boat_size_class BOAT_SIZE_CLASS NOT NULL,
@@ -342,7 +342,7 @@ VALUES
 (15, 'individual',null , 'Hayes', 'Vamplus', '6/21/1979', 'Serbia', '0639 Evergreen Terrace', null, 'Rača', 'cheese4', 'gbedo1@craigslist.org', '416-570-0419', '118-400-3803');
 
 -- boats 
-INSERT INTO boat_details (boat_id, customer_id, boat_yard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length_overall, beam, draft, cargo_tankers_capacity)
+INSERT INTO boat_details (boat_id, customer_id, boatyard_id, dock_id, boat_storage_type, boat_size_class, boat_type, boat_name, model, build_date, length_overall, beam, draft, cargo_tankers_capacity)
 VALUES
 (1, 13, 4, 6, 'dry slip', 'medium', 'commercial', 'Saudra', 417699, '5/4/1993', 184, 85, 175, 397),
 (2, 11, 1, 9, 'indoors', 'medium', 'commercial', 'Timothea', 951237, '8/20/1982', 292, 137, 479, 432),
@@ -553,10 +553,10 @@ VALUES
 (14, 2),
 (15, 3);
 
-------------------
+
 ----------------
 -- Views 
-----------------------------------
+----------------
 
 -- Staff working on boatyard 
 CREATE VIEW staff_boatyard_view AS
@@ -581,13 +581,142 @@ end,
 sd.staff_id;
 
 -- Boatyard storage availability
+CREATE VIEW boatyard_storage_availabllity_view AS 
+SELECT
+  dd.boatyard_id AS "boatyard ID",
+  byd.boatyard_name AS "boatyard Name",
+  SUM(dd.wet_slips_current_capcity) AS "wet slips available",
+  SUM(dd.dry_slips_current_capacity) AS "dry slips available",
+  byd.indoor_storage_capacity AS "indoor storage available",
+  (SUM(dd.wet_slips_current_capcity) + SUM(dd.dry_slips_current_capacity) + byd.indoor_storage_capacity) AS "total storage available"
+FROM dock_details dd
+  INNER JOIN boatyard_details byd ON byd.boatyard_id = dd.boatyard_id
+GROUP BY dd.boatyard_id, byd.boatyard_name, byd.indoor_storage_capacity
+ORDER BY dd.boatyard_id;
 
 -- Bookings in next available days 
 
+
 -- Business storing boats with company
+CREATE VIEW Business_Storing_Boats_view AS 
+SELECT 
+  cd.customer_id AS "Customer ID",
+  cd.business_name AS "Business name",
+  CONCAT(cd.customer_fname,' ', cd.customer_lname) AS "Business employee contact", 
+  cd.country AS "Country based",
+  CONCAT(cd.address1,' ', cd.address2) AS "Business Address",
+  cd.town AS "Town",
+  cd.postcode AS "Postcode",
+  cd.emailaddress AS "Business email adress", 
+  cd.mobile_number AS "Business mobile contact",
+  cd.landline_number AS "Business landline contact"
+FROM customer_details cd
+WHERE cd.customer_type = 'business';
 
--- Tasks working on a service currently (on-going) 
+-- Individuals storing boats with company 
+CREATE VIEW indivudals_Storing_Boats_view AS 
+SELECT 
+  cd.customer_id AS "Customer ID",
+  CONCAT(cd.customer_fname,' ', cd.customer_lname) AS "Customer name", 
+  cd.country AS "Country ",
+  CONCAT(cd.address1,' ', cd.address2) AS "Address",
+  cd.town AS "Town",
+  cd.postcode AS "Postcode",
+  cd.emailaddress AS "Email adress",
+  cd.mobile_number AS "Mobile number",
+  cd.landline_number AS "landline number"
+FROM customer_details cd
+WHERE cd.customer_type = 'individual';
 
+-- Service history 
+CREATE VIEW completed_bookings_view AS
+SELECT
+  b.booking_id AS "Booking ID",
+  b.customer_id AS "Customer ID",
+  cd.customer_type AS "Is business or Individual",
+  cd.business_name AS "Business name",
+  CONCAT(cd.customer_fname,' ',cd.customer_lname) AS "Customer full name",
+  b.booking_type AS "Booking Type",
+  b.booking_date AS "Date Booked for",
+  b.issue_description AS "Boat Issue description"
+FROM booking b 
+  INNER JOIN customer_details cd ON cd.customer_id = b.customer_id
+WHERE b.booking_status = 'completed'
+ORDER BY customer_type;
+
+-- On-going services:
+CREATE VIEW ongoing_bookings_view AS
+SELECT
+  b.booking_id AS "Booking ID",
+  b.customer_id AS "Customer ID",
+  cd.customer_type AS "Is business or Individual",
+  cd.business_name AS "Business name",
+  CONCAT(cd.customer_fname,' ',cd.customer_lname) AS "Customer full name",
+  b.booking_type AS "Booking Type",
+  b.booking_date AS "Date Booked for",
+  b.issue_description AS "Boat Issue description"
+FROM booking b 
+  INNER JOIN customer_details cd ON cd.customer_id = b.customer_id
+WHERE b.booking_status = 'on-going'
+ORDER BY customer_type;
+
+-- Scheduled services:
+CREATE VIEW scheduled_bookings_view AS
+SELECT
+  b.booking_id AS "Booking ID",
+  b.customer_id AS "Customer ID",
+  cd.customer_type AS "Is business or Individual",
+  cd.business_name AS "Business name",
+  CONCAT(cd.customer_fname,' ',cd.customer_lname) AS "Customer full name",
+  b.booking_type AS "Booking Type",
+  b.booking_date AS "Date Booked for",
+  b.issue_description AS "Boat Issue description"
+FROM booking b 
+  INNER JOIN customer_details cd ON cd.customer_id = b.customer_id
+WHERE b.booking_status = 'scheduled'
+ORDER BY customer_type;
+
+-- Commercial ships being stored 
+CREATE VIEW commercial_ships_stored_view AS 
+SELECT 
+  bd.boat_type AS "Commercial ship boat Type",
+  bd.boat_id AS "Boat ID",
+  bd.boatyard_id AS "Boatyard ID",
+  byd.boatyard_name AS "Boatyard_name", 
+  bd.dock_id AS "Dock ID",
+  bd.boat_storage_type AS "Method of storage",
+  bd.boat_size_class AS "Boat size class",
+  bd.boat_name AS "Boat name",
+  bd.build_date AS "Boat built date",
+  bd.length_overall AS "Length overall",
+  bd.beam AS "Length of boat",
+  bd.draft AS "Draft of boat",
+  bd.cargo_tankers_capacity AS "Cargo capacity"
+  FROM boat_details bd 
+    INNER JOIN boatyard_details byd ON bd.boatyard_id = byd.boatyard_id 
+  WHERE boat_type = 'commercial'
+  ORDER BY bd.boatyard_id;
+  
+-- Private ships being stored 
+CREATE VIEW private_ships_stored_view AS 
+SELECT 
+  bd.boat_type AS "Private ship boat Type",
+  bd.boat_id AS "Boat ID",
+  bd.boatyard_id AS "Boatyard ID",
+  byd.boatyard_name AS "Boatyard_name", 
+  bd.dock_id AS "Dock ID",
+  bd.boat_storage_type AS "Method of storage",
+  bd.boat_size_class AS "Boat size class",
+  bd.boat_name AS "Boat name",
+  bd.build_date AS "Boat built date",
+  bd.length_overall AS "Length overall",
+  bd.beam AS "Length of boat",
+  bd.draft AS "Draft of boat",
+  bd.cargo_tankers_capacity AS "Cargo capacity"
+  FROM boat_details bd 
+    INNER JOIN boatyard_details byd ON bd.boatyard_id = byd.boatyard_id 
+  WHERE boat_type = 'private'
+  ORDER BY bd.boatyard_id;
 
 /*-------------------------------------------------------------------------------------------------
 Queries 
