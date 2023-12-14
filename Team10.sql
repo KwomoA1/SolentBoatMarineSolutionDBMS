@@ -630,7 +630,7 @@ VALUES
 (17, 6),
 (18, 7),
 (19, 5),
-(20, 3);
+(20, 4);
 
 
 ----------------
@@ -699,7 +699,7 @@ SELECT
   CONCAT(cd.address1,' ', cd.address2) AS "Address",
   cd.town AS "Town",
   cd.postcode AS "Postcode",
-  cd.emailaddress AS "Email adress",
+  cd.emailaddress AS "Email address",
   cd.mobile_number AS "Mobile number",
   cd.landline_number AS "landline number"
 FROM customer_details cd
@@ -800,84 +800,77 @@ Queries
 
 -- Query 1
 
-/*
-Query 1 is designed so that managers can list all scheduled tasks in the future,
-this can help with scheduling and procurement 
-*/
-
 SELECT 
-  booking_id AS "Booking ID", 
-  boat_name AS "Boat", 
-  boatyard_name AS "Boatyard", 
-  booking_date AS "Booking Date", 
-  issue_description AS "Issue Description"
-FROM booking
-  JOIN boat_details ON boat_details.boat_id = booking.boat_id
-  JOIN boatyard_details ON boatyard_details.boatyard_id = booking.boatyard_id
-WHERE booking_type = 'pre-booked' AND booking_status = 'scheduled';
+"Booking ID",
+"Date Booked for" AS "Booking date",
+"Booking Type",
+b.booking_status AS "Booking status",
+"Customer full name",
+"Boat Issue description"
+FROM scheduled_bookings_view 
+  INNER JOIN booking b ON scheduled_bookings_view."Booking ID" = b.booking_id
+WHERE "Booking Type" = 'pre-booked' AND b.booking_status = 'scheduled'
+ORDER BY "Booking date" ASC;
 
 -- Query 2 
 
-/* 
-Query 2 is designed to help HR procurement by telling you how many members of a selected staff type,
-in this case, boat mechanics, are available. This has then been split into how many are on each site,
-as this can then be used to help decide which place is best for certain jobs for ships 
-*/
-
-SELECT 
-  COUNT(staff_roles.staff_id) AS "Number of Boat Mechanics", 
-  boatyard_details.boatyard_name AS "Site"
-FROM staff_roles
-  JOIN roles ON roles.role_id = staff_roles.role_id
-  JOIN staff_details ON staff_roles.staff_id = staff_details.staff_id
-  JOIN boatyard_details ON boatyard_details.boatyard_id = staff_details.boatyard_id
-WHERE roles.role_name IN (SELECT role_name FROM roles WHERE role_name = ('Boat Mechanic'))
-GROUP BY boatyard_details.boatyard_id;
+SELECT
+  "Boatyard ID",
+  "Boatyard Name",
+  "Staff ID",
+  "staff name",
+  "Staff role", 
+  COUNT(*) as "Number of task doing"
+FROM staff_boatyard_view
+  INNER JOIN booking_service bs ON staff_boatyard_view."Staff ID" = bs.staff_id
+WHERE "Boatyard ID" = 2
+GROUP BY "Staff ID","Boatyard ID", "Boatyard Name", "staff name", "Staff role"
+ORDER BY "Boatyard ID",
+CASE "Staff role"
+  WHEN 'Manager' THEN 1
+  WHEN 'Assistant Manager' THEN 2
+  ELSE 3
+END;
 
 --Query 3
-/*
-For when you need to look up the capacity of the docks in a dockyard in a specific country. (This scenario is Poland)
-*/
-
 SELECT 
-  boatyard_details.boatyard_name AS "Boatyard Name", 
-  dock_details.dock_id AS "Dock ID", 
-  dock_details.wet_slips_current_capacity AS "Wet Slip Capacity",
-  dock_details.dry_slips_current_capacity AS "Dry Slip Capacity"
-FROM boatyard_details
-  JOIN dock_details ON boatyard_details.boatyard_id = dock_details.boatyard_id
-WHERE boatyard_details.country IN (SELECT country FROM boatyard_details WHERE country = ('Poland'))
-ORDER BY dock_details.dock_id;
-
+  bd.boatyard_id AS "Boatyard ID",
+  bd.dock_id AS "Dock ID",
+  byd.boatyard_name AS "Boatyard name",
+  COUNT(*)AS "Number of boats occupting dock"
+FROM boat_details bd 
+  INNER JOIN boatyard_details byd ON bd.boatyard_id = byd.boatyard_id 
+GROUP BY bd.boatyard_id, bd.dock_id, byd.boatyard_name
+ORDER BY bd.boatyard_id;
 
 --Query 4
-/*
-For when you need to see all of the boats that are owned by businesses rather than individuals not affiliated with a business
-*/
-SELECT 
-  customer_details.customer_id AS "Customer ID", 
-  customer_details.business_name AS "Business Name", 
-  boat_details.boat_id AS "Boat ID", 
-  boat_details.boat_name AS "Boat Name"
-FROM customer_details
-  JOIN boat_details ON customer_details.customer_id = boat_details.customer_id
-WHERE customer_details.customer_type IN (SELECT customer_type FROM customer_details WHERE customer_type =  ('business'))
-ORDER BY customer_details.customer_id;
+SELECT
+  bd.customer_id AS "Customer ID",
+  cd.business_name AS "Business name",
+  bd.boat_id AS "Boat ID", 
+  bd.boat_name AS "Boat name",
+  bd.length_overall AS "Boat length overall", 
+  bd.beam AS "length of boat",
+  bd.draft AS "Draft of boat", 
+  bd.cargo_tankers_capacity AS "Cargo capacity"
+FROM boat_details bd 
+  INNER JOIN customer_details cd ON bd.customer_id = cd.customer_id
+WHERE cd.customer_type = 'business' AND bd.boat_type = 'commercial';
+  
+
 
 --Query 5
-/*
-This query allows you to search up a customer by their ID and then find the boats under their name/assosiated with them as well as it's booking status.
-*/
 
 SELECT 
-  customer_details.customer_id AS "Customer ID", 
-  boat_details.boat_id AS "Boat ID", 
-  boat_details.boat_name AS "Boat Name", 
-  boat_details.model AS "Boat Model", 
-  booking.booking_status AS "Booking Status"
-FROM customer_details
-  JOIN boat_details ON customer_details.customer_id = boat_details.customer_id
-  JOIN booking ON customer_details.customer_id = booking.customer_id
-WHERE customer_details.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
-ORDER BY boat_details.boat_id;
+  cd.customer_id AS "Customer ID",
+  CONCAT(cd.customer_fname,' ',cd.customer_lname) AS "Customer fullname",
+  bd.boat_id AS "Boat ID", 
+  bd.boat_name AS "Boat Name", 
+  bd.model AS "Boat Model", 
+  b.booking_status AS "Booking Status"
+FROM customer_details cd
+  JOIN boat_details bd ON cd.customer_id = bd.customer_id
+  JOIN booking b ON cd.customer_id = b.customer_id
+WHERE cd.customer_id IN (SELECT customer_id FROM customer_details WHERE customer_id = 14)
+ORDER BY bd.boat_id;
 
