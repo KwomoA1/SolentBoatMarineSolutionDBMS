@@ -218,6 +218,24 @@ CREATE TABLE booking_service(
 );
 
 -------------------------
+-- Indexes 
+-------------------------
+CREATE INDEX cdMobile_number_index ON customer_details
+(
+  mobile_number ASC
+);
+
+CREATE INDEX sdMobile_number_index ON staff_details 
+(
+  mobile_number ASC
+);
+
+CREATE INDEX emMobile_number_index ON emergency_contact
+(
+  contact_mobile ASC
+);
+
+-------------------------
 -- Function
 -------------------------
 
