@@ -17,24 +17,24 @@ Triggers/Functions
 -- Boat size update trigger/function
 
 
-/*-------------------------------------------------------------------------------------------------
-Database Creation and connection 
-*/-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-- Database Creation and connection 
+-------------------------------------------------------------------------------------------------
 CREATE DATABASE team10;
 \c team10;
 
-/*------------------------------------------------------------------------------------------------
-Enum type creations 
-*/------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+-- Enum type creations 
+------------------------------------------------------------------------------------------------
 CREATE TYPE CUST_TYPE AS ENUM('business', 'individual');
 CREATE TYPE STORAGETYPE AS ENUM ('wet slip', 'dry slip', 'indoors');
 CREATE TYPE BOATTYPE AS ENUM ('commercial', 'private');
 CREATE TYPE BOOKINGTYPE AS ENUM('pre-booked','emergency service');
 CREATE TYPE BOOKINGSTATUS AS ENUM('scheduled','on-going','completed'); 
 CREATE TYPE ENGINETYPE AS ENUM('inboard-engine','outboard-engine','stern drive');
-/*-------------------------------------------------------------------------------------------------
-Table Creations 
-*/-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-- Table Creations 
+-------------------------------------------------------------------------------------------------
 
 CREATE TABLE customer_details(
   customer_id SERIAL PRIMARY KEY,
@@ -289,9 +289,9 @@ FOR EACH ROW
 EXECUTE FUNCTION fn_update_indoor_storage_capacity();
 
 
-/*-------------------------------------------------------------------------------------------------
-Data inserts 
-*/-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-- Data inserts 
+-------------------------------------------------------------------------------------------------
 
 -- Facilities 
 INSERT INTO facilities (facility_id, facility_name) 
@@ -453,7 +453,7 @@ VALUES
 (14, 9, 13, 1, 'pre-booked', '3/16/2023', 'The boats steering mechanism is stiff or unresponsive, making navigation difficult. Inspection and lubrication of the steering components are required.', 'completed'),
 (15, 5, 8, 1, 'pre-booked', '9/27/2023', 'The boats upholstery shows signs of water damage, affecting the aesthetic appeal and comfort. Drying, cleaning, and potential upholstery replacement are necessary.', 'on-going');
 
-
+-- booking_services_staff (insection) 
 INSERT INTO booking_service (booking_id, service_id, staff_id) 
 VALUES
 (1, 6, 9),
@@ -472,6 +472,7 @@ VALUES
 (14, 14, 13),
 (15, 15, 7);
 
+-- classes
 INSERT INTO classes (class_id, class_name)
 VALUES
 (1, 'Sailboat'),
@@ -485,6 +486,7 @@ VALUES
 (9, 'Submarine'),
 (10, 'Sloop');
 
+-- boat_class (Intersection) 
 INSERT INTO boat_classes (boat_id, class_id) 
 VALUES
 (1, 1),
@@ -503,6 +505,7 @@ VALUES
 (14, 8),
 (15, 8);
 
+-- hull materials
 INSERT INTO hull_materials (hull_material_id, hull_material_name) 
 VALUES
 (1, 'carbon fibre'),
@@ -511,6 +514,7 @@ VALUES
 (4, 'fibre glass'),
 (5, 'plastic');
 
+-- boat_hullmaterials (insersection)
 INSERT INTO boat_hullmaterials (boat_id, hull_material_id) 
 VALUES
 (1, 2),
@@ -559,7 +563,7 @@ VALUES
 (14, 15, 'Sòng', 'Isacsson', '536-567-1235', '218-836-1186', 'sroote2@hhs.gov'),
 (15, 1, 'Andrée', 'Belch', '307-450-9977', null, 'jcrufts3@1und1.de');
 
-/*fuel types*/
+-- Fuel types
 INSERT INTO fuel_types (fuel_id, fuel_type)
 VALUES
 (1, 'Ethanol-free gasoline'),
@@ -572,7 +576,7 @@ VALUES
 (8, 'Heavy Fuel Oil'),
 (9, 'Low Sulfur Fuel Oil');
 
-
+-- Engines
 INSERT INTO engines (engine_id, fuel_id, engine_type, engine_make, engine_model) 
 VALUES
 (1, 1, 'inboard-engine', 'Volvo Penta', 'UY6 HJ3'),
@@ -591,6 +595,7 @@ VALUES
 (14, 9, 'outboard-engine', 'Volvo', 'D6S4V'),
 (15, 2, 'stern drive', 'Vetus Deutz', 'K8Z 3Y');
 
+-- boats_engine (intersection) 
 INSERT INTO boats_engine (boat_id, engine_id)
 VALUES
 (1, 9),
@@ -609,6 +614,7 @@ VALUES
 (14, 4),
 (15, 9);
 
+-- Staff_roles (intersection)
 INSERT INTO staff_roles (staff_id, role_id)
 VALUES
 (1, 3),
@@ -794,9 +800,9 @@ SELECT
   ORDER BY bd.boatyard_id;
 
 
-/*-------------------------------------------------------------------------------------------------
-Queries 
-*/-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-- Queries 
+-------------------------------------------------------------------------------------------------
 
 -- Query 1
 
