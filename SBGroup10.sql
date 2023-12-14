@@ -235,6 +235,11 @@ CREATE INDEX emMobile_number_index ON emergency_contact
   contact_mobile ASC
 );
 
+CREATE INDEX boatyard_index ON boatyard_details
+(
+  postcode_zip ASC
+);
+
 -------------------------
 -- Function
 -------------------------
